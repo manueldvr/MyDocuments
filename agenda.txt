@@ -1,0 +1,135 @@
+30 min with Martina
+Wednesday Oct 1, 2025 ⋅ 16:00 – 16:30 (
+
+
+MetLife
+  jueves 16hs
+
+
+technical interview for a Java Developer position at Globant, with the meeting scheduled for
+  October 3, 2025, from 5:00pm to 6:00pm.
+
+
+bonzzu
+  miercoles
+  17hs
+itr
+  lunes 12 hs
+  Jueves 17hs
+
+
+
+
+
+
+
+
+
+  --- -------------------------------------
+
+
+  // Online Java Compiler
+  // Use this editor to write, compile and run your Java code online
+  import java.util.Map;
+  import java.util.stream.Collectors;
+  import java.util.Arrays;
+  import java.util.List;
+  import java.util.Objects;
+  import java.util.stream.Collectors;
+  import java.util.Optional;
+  import java.util.Comparator;
+
+  // -------------------------
+  public class EmployeeApp {
+      public record EmployeeDTO(String name, int age, String department, double salary, boolean isActive) {
+      }
+      public static void main(String[] args) {
+          // Lista de empleados
+          List<EmployeeDTO> employees = List.of(
+              new EmployeeDTO("Ana", 28, "Engineering", 75000.0, true),
+              new EmployeeDTO("Bob", 35, "Sales", 60000.0, false),
+              new EmployeeDTO("Carlos", 28, "Engineering", 80000.0, true),
+              new EmployeeDTO("Diana", 40, "HR", 65000.0, true),
+              new EmployeeDTO("Eva", 30, "Sales", 62000.0, true)
+          );
+          // Pregunta 1: ¿Cuáles son los nombres de los empleados activos en el departamento de "Engineering"?
+          List<String> activeEngineers = employees.stream().filter(e -> e.isActive() && e.department().equals("Engineering")).map(EmployeeDTO::name).toList();
+          System.out.println("Ingenieros activos: " + activeEngineers);
+
+          //Pregunta 2: ¿Cuál es el salario promedio de los empleados mayores de 30 años?
+          Double ave = employees.stream()
+              .filter(e-> e.age() > 30)
+              .mapToDouble(EmployeeDTO::salary)
+              .average()
+              .orElse(0.0);
+          System.out.printf("Salario promedio (>30 años): %.2f%n", ave);
+
+          //Pregunta 3: Agrupa los empleados por departamento y cuenta cuántos hay en cada uno.
+          Map<String, Long> empByDept = employees.stream().collect(Collectors.groupingBy(EmployeeDTO::department, Collectors.counting()));
+          System.out.println("Conteo por departamento: " + empByDept);
+
+          // Pregunta 4: Encuentra al empleado con el salario más alto en "Sales".
+          Optional<EmployeeDTO> highestPaidSales = employees.stream().filter(e-> e.department().equals("Sales")).max(Comparator.comparingDouble(EmployeeDTO::salary));
+          highestPaidSales.ifPresent(emp-> System.out.println("Mayor salario en Sales: " + emp));
+
+          // Pregunta 5: Convierte los nombres de los empleados activos en una cadena separada por comas.
+          String names = employees.stream()
+              .filter(e-> e.isActive())
+              .map(EmployeeDTO::name)
+              .collect(Collectors.joining(", "));
+          System.out.println("Nombres activos: " + names);
+      }
+  }
+
+  // -------------------------
+  record Persona(String nombre, int edad, String ciudad) {
+      @Override
+      public boolean equals(Object o) {
+          if (this == o) return true;
+          if (o == null || getClass() != o.getClass()) return false;
+          Persona persona = (Persona) o;
+          return edad == persona.edad && Objects.equals(nombre, persona.nombre) && Objects.equals(ciudad, persona.ciudad);
+      }
+      @Override
+      public int hashCode() {
+          return Objects.hash(nombre, edad, ciudad);
+      }
+  }
+  // -------------------------
+  /*
+  class Main {
+
+      public static void main(String[] args) {
+          System.out.println("Try programiz.pro");
+          List<Persona> personas = Arrays.asList(
+              new Persona("Ana", 25, "Madrid"),
+              new Persona("Bob", 30, "Barcelona"),
+              new Persona("Carlos", 25, "Madrid"),
+              new Persona("Diana", 35, "Valencia"),
+              new Persona("Eva", 30, "Barcelona")
+          );
+
+          Map<Integer, List<Persona>> porEdad = personas.stream()
+              .collect(Collectors.groupingBy(Persona::edad));
+          System.out.println(porEdad);
+
+          // Ejemplo: {25=[Ana, Carlos], 30=[Bob, Eva], 35=[Diana]}
+
+          Map<String, Long> conteoPorCiudad = personas.stream()
+              .collect(Collectors.groupingBy(Persona::ciudad, Collectors.counting()));
+          System.out.println(conteoPorCiudad);
+          // Ejemplo: {Barcelona=2, Madrid=2, Valencia=1}
+
+          // Particionamiento (true/false): Mayores de 28 años
+          Map<Boolean, List<Persona>> particionEdad = personas.stream()
+              .collect(Collectors.partitioningBy(p -> p.edad() > 28));
+          System.out.println(particionEdad);
+
+      }
+  }*/
+
+
+  A Mauricio Gabriel Mereles
+  CUIT/CUIL:20-34753499-5
+  CVU:0000168300000022729217
+  LEMON
