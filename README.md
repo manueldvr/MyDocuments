@@ -26,17 +26,21 @@ docs, tutorials, books
     - [@Async, Future, Completable Future, y Executor Service API](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/concurrencia_1.md)
     - [@Async vs @Transactional](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Async%20vs%20Transactional.md)
     - [Tutorial: Usando @Async en Spring Boot](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/concurrencia_Async.md)
-  - **Clean Code**
+- **Clean Code**
     - [basics](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Clean%20Code.md)
-  - **Spring**
-    - [ID](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Spring_1.md)
-    - [¿Cómo optimizar Spring Boot con Java 21 para Escalado Extremo que debe resolver 1 million de servicios RESTfull por segundo?](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/Asynchronous%20%26%20Non-Blocking.md)
-  - **TDD**
-    - []()  
-  - **Monitoreo**
-    - [basics](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/Monitoreo.md)
+- **Spring**
+  - [ID](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Spring_1.md)
+  - []()
+  - []()
+  - []()
+  - [¿Cómo optimizar Spring Boot con Java 21 para Escalado Extremo que debe resolver 1 million de servicios RESTfull por segundo?](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/Asynchronous%20%26%20Non-Blocking.md)
   - **Persistencia**
     - []()
+- **TDD**
+  - []()  
+- **Monitoreo**
+    - [basics](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/Monitoreo.md)
+
   - ****
     - []()
   - ****
