@@ -16,19 +16,23 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
 
 #### Paso 1: Configurar Actuator
 1. **Añade la dependencia** en tu archivo `pom.xml` (si usas Maven):
-   ```xml
+2. 
+```xml
    <dependency>
        <groupId>org.springframework.boot</groupId>
        <artifactId>spring-boot-starter-actuator</artifactId>
    </dependency>
-   ```
-   Si usas Gradle, añade:
-   ```gradle
+```
+
+Si usas Gradle, añade:
+   
+```gradle
    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-   ```
+```
 
 2. **Habilita endpoints** en `application.yml` (o `application.properties`):
-   ```yaml
+   
+```yaml
    management:
      endpoints:
        web:
@@ -37,13 +41,16 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
      endpoint:
        health:
          show-details: always # Muestra detalles de salud
-   ```
+```
 
 3. **Crea un proyecto básico**:
-   Supongamos que tienes una aplicación Spring Boot con un controlador simple:
-   ```java
-   import org.springframework.web.bind.annotation.GetMapping;
-   import org.springframework.web.bind.annotation.RestController;
+
+Supongamos que tienes una aplicación Spring Boot con un controlador simple:
+   
+   
+```java
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
    @RestController
    public class HelloController {
@@ -52,13 +59,15 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
            return "¡Hola, Spring Boot!";
        }
    }
-   ```
+```
 
 4. **Prueba los endpoints de Actuator**:
-   - Inicia tu aplicación (usa `mvn spring-boot:run` o tu IDE).
-   - Accede a estos endpoints vía HTTP (puedes usar `curl`, Postman o un navegador):
-     - **`http://localhost:8080/actuator/health`**: Muestra el estado de la app.
-       ```json
+
+- Inicia tu aplicación (usa `mvn spring-boot:run` o tu IDE).
+- Accede a estos endpoints vía HTTP (puedes usar `curl`, Postman o un navegador):
+- **`http://localhost:8080/actuator/health`**: Muestra el estado de la app.
+
+```json
        {
          "status": "UP",
          "components": {
@@ -66,9 +75,12 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
            "ping": {"status": "UP"}
          }
        }
-       ```
-     - **`http://localhost:8080/actuator/metrics`**: Lista métricas disponibles, como uso de memoria o hilos.
-       ```json
+```
+
+- **`http://localhost:8080/actuator/metrics`**: 
+Lista métricas disponibles, como uso de memoria o hilos.
+
+```json
        {
          "names": [
            "jvm.memory.used",
@@ -76,9 +88,11 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
            ...
          ]
        }
-       ```
-     - Para ver una métrica específica: `http://localhost:8080/actuator/metrics/http.server.requests`.
-       ```json
+```
+
+- Para ver una métrica específica: `http://localhost:8080/actuator/metrics/http.server.requests`.
+
+```json
        {
          "name": "http.server.requests",
          "measurements": [
@@ -87,9 +101,10 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
          ],
          ...
        }
-       ```
+```
 
 **Desde el punto de vista del programador**:
+
 - **Qué haces**: Añades la dependencia, configuras los endpoints en `application.yml` y pruebas con HTTP.
 - **Qué obtienes**: Visibilidad instantánea sobre salud y métricas básicas (CPU, memoria, requests).
 - **Truco**: Usa `management.endpoints.web.base-path=/monitor` para cambiar el prefijo de `/actuator` si quieres personalizar.
@@ -100,16 +115,20 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
 **Micrometer** es una librería de métricas que se integra con Actuator para generar y exportar métricas personalizadas o estándar a sistemas como Prometheus. Es perfecto para medir cosas específicas, como cuántas veces se llama un endpoint o el tiempo de ejecución de un método.
 
 #### Paso 1: Configurar Micrometer
+
 1. **Añade la dependencia de Micrometer** (para Prometheus, por ejemplo):
+
    ```xml
    <dependency>
        <groupId>io.micrometer</groupId>
        <artifactId>micrometer-registry-prometheus</artifactId>
    </dependency>
    ```
-   Esto incluye Micrometer y el adaptador para Prometheus.
+
+Esto incluye Micrometer y el adaptador para Prometheus.
 
 2. **Habilita el endpoint de Prometheus** en `application.yml`:
+
    ```yaml
    management:
      endpoints:
@@ -123,8 +142,10 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
    ```
 
 3. **Añade métricas personalizadas**:
+
    Vamos a crear una métrica para contar cuántas veces se llama el endpoint `/hello`.
    Modifica el controlador:
+
    ```java
    import io.micrometer.core.instrument.Counter;
    import io.micrometer.core.instrument.MeterRegistry;
@@ -149,24 +170,30 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
            return "¡Hola, Spring Boot!";
        }
    }
-   ```
+```
 
 4. **Prueba las métricas**:
+
    - Llama varias veces a `http://localhost:8080/hello`.
    - Accede a `http://localhost:8080/actuator/prometheus`. Verás algo como:
-     ```prometheus
+
+```prometheus
      # HELP hello_requests_total Número de veces que se llama al endpoint /hello
      # TYPE hello_requests_total counter
      hello_requests_total{endpoint="/hello"} 5.0
-     ```
-   - Esto muestra que `/hello` fue llamado 5 veces.
+```
+  - Esto muestra que `/hello` fue llamado 5 veces.
 
 5. **Opcional: Conecta con Prometheus y Grafana**:
    - Instala Prometheus con Docker:
+
+  
      ```bash
      docker run -d -p 9090:9090 prom/prometheus
      ```
+     
    - Configura `prometheus.yml` para scrapear tu app:
+     
      ```yaml
      scrape_configs:
        - job_name: 'spring-app'
@@ -175,9 +202,11 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
            - targets: ['host.docker.internal:8080']
      ```
    - Instala Grafana (Docker: `docker run -d -p 3000:3000 grafana/grafana`) y añade Prometheus como fuente de datos.
+   
    - Crea un dashboard en Grafana para visualizar `hello_requests_total`.
 
 **Desde el punto de vista del programador**:
+
 - **Qué haces**: Inyectas `MeterRegistry` en tu código, defines contadores o temporizadores (como `Counter` o `Timer`), y usas el endpoint `/actuator/prometheus`.
 - **Qué obtienes**: Métricas personalizadas (ej: número de llamadas a `/hello`) que puedes visualizar en herramientas como Grafana.
 - **Truco**: Usa tags en las métricas (`endpoint=/hello`) para filtrar en Prometheus/Grafana.
@@ -185,7 +214,9 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
 ---
 
 ### Ejemplo Completo
+
 **Estructura del proyecto**:
+
 ```
 src/main/java/com/example/demo/
   - DemoApplication.java
@@ -197,6 +228,7 @@ pom.xml
 
 **Código completo**:
 - `pom.xml`:
+
   ```xml
   <dependencies>
       <dependency>
@@ -213,7 +245,9 @@ pom.xml
       </dependency>
   </dependencies>
   ```
+  
 - `application.yml`:
+  
   ```yaml
   management:
     endpoints:
@@ -223,10 +257,12 @@ pom.xml
     endpoint:
       health:
         show-details: always
-  ```
+```
+  
 - `HelloController.java` (como arriba).
 
 **Cómo probar**:
+
 1. Ejecuta la app (`mvn spring-boot:run`).
 2. Llama a `http://localhost:8080/hello` varias veces.
 3. Revisa métricas en `http://localhost:8080/actuator/prometheus`.
@@ -235,6 +271,7 @@ pom.xml
 ---
 
 ### Perspectiva del Programador
+
 - **Facilidad**: Actuator requiere solo una dependencia y un archivo de configuración. Micrometer es igual de simple si usas contadores básicos.
 - **Debugging**: Usa `/actuator/health` para verificar si tu app está viva. Usa `/actuator/metrics` para detectar cuellos de botella (ej: tiempo de respuesta).
 - **Escalabilidad**: Las métricas de Micrometer se integran con Prometheus, lo que te prepara para entornos de producción sin cambiar código.
@@ -245,10 +282,11 @@ pom.xml
 
 **Siguientes pasos**:
 - Añade un `Timer` para medir el tiempo de ejecución de métodos:
-  ```java
+
+```java
   Timer timer = Timer.builder("hello.duration").register(meterRegistry);
   timer.record(() -> /* tu lógica */);
-  ```
+```
 
 
 - Explora otros endpoints de Actuator como `/actuator/info` para metadatos de la app.
@@ -294,19 +332,25 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
 **Actuator** es una herramienta integrada en Spring Boot que expone endpoints HTTP para monitorear la salud, métricas, variables de entorno y más de tu aplicación. Es ideal para principiantes porque requiere poca configuración y te da información útil de inmediato.
 
 #### Paso 1: Configurar Actuator
+
+
 1. **Añade la dependencia** en tu archivo `pom.xml` (si usas Maven):
-   ```xml
+
+
+```xml
    <dependency>
        <groupId>org.springframework.boot</groupId>
        <artifactId>spring-boot-starter-actuator</artifactId>
    </dependency>
-   ```
-   Si usas Gradle, añade:
-   ```gradle
+```
+Si usas Gradle, añade:
+
+```gradle
    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-   ```
+```
 
 2. **Habilita endpoints** en `application.yml` (o `application.properties`):
+
    ```yaml
    management:
      endpoints:
@@ -320,6 +364,7 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
 
 3. **Crea un proyecto básico**:
    Supongamos que tienes una aplicación Spring Boot con un controlador simple:
+   
    ```java
    import org.springframework.web.bind.annotation.GetMapping;
    import org.springframework.web.bind.annotation.RestController;
@@ -337,6 +382,8 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
    - Inicia tu aplicación (usa `mvn spring-boot:run` o tu IDE).
    - Accede a estos endpoints vía HTTP (puedes usar `curl`, Postman o un navegador):
      - **`http://localhost:8080/actuator/health`**: Muestra el estado de la app.
+
+ 
        ```json
        {
          "status": "UP",
@@ -346,7 +393,10 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
          }
        }
        ```
+       
      - **`http://localhost:8080/actuator/metrics`**: Lista métricas disponibles, como uso de memoria o hilos.
+     
+      
        ```json
        {
          "names": [
@@ -356,8 +406,10 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
          ]
        }
        ```
+     
      - Para ver una métrica específica: `http://localhost:8080/actuator/metrics/http.server.requests`.
-       ```json
+
+```json
        {
          "name": "http.server.requests",
          "measurements": [
@@ -366,9 +418,10 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
          ],
          ...
        }
-       ```
+```
 
 **Desde el punto de vista del programador**:
+
 - **Qué haces**: Añades la dependencia, configuras los endpoints en `application.yml` y pruebas con HTTP.
 - **Qué obtienes**: Visibilidad instantánea sobre salud y métricas básicas (CPU, memoria, requests).
 - **Truco**: Usa `management.endpoints.web.base-path=/monitor` para cambiar el prefijo de `/actuator` si quieres personalizar.
@@ -380,16 +433,20 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
 
 #### Paso 1: Configurar Micrometer
 1. **Añade la dependencia de Micrometer** (para Prometheus, por ejemplo):
-   ```xml
+
+```xml
    <dependency>
        <groupId>io.micrometer</groupId>
        <artifactId>micrometer-registry-prometheus</artifactId>
    </dependency>
-   ```
-   Esto incluye Micrometer y el adaptador para Prometheus.
+```
 
-2. **Habilita el endpoint de Prometheus** en `application.yml`:
-   ```yaml
+Esto incluye Micrometer y el adaptador para Prometheus.
+
+2. **Habilita el endpoint de Prometheus** en 
+`application.yml`:
+
+```yaml
    management:
      endpoints:
        web:
@@ -399,11 +456,12 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
        export:
          prometheus:
            enabled: true
-   ```
+```
 
 3. **Añade métricas personalizadas**:
    Vamos a crear una métrica para contar cuántas veces se llama el endpoint `/hello`.
    Modifica el controlador:
+   
    ```java
    import io.micrometer.core.instrument.Counter;
    import io.micrometer.core.instrument.MeterRegistry;
@@ -431,21 +489,27 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
    ```
 
 4. **Prueba las métricas**:
+
    - Llama varias veces a `http://localhost:8080/hello`.
    - Accede a `http://localhost:8080/actuator/prometheus`. Verás algo como:
+   
      ```prometheus
      # HELP hello_requests_total Número de veces que se llama al endpoint /hello
      # TYPE hello_requests_total counter
      hello_requests_total{endpoint="/hello"} 5.0
      ```
+     
    - Esto muestra que `/hello` fue llamado 5 veces.
 
 5. **Opcional: Conecta con Prometheus y Grafana**:
    - Instala Prometheus con Docker:
+
      ```bash
      docker run -d -p 9090:9090 prom/prometheus
      ```
+
    - Configura `prometheus.yml` para scrapear tu app:
+
      ```yaml
      scrape_configs:
        - job_name: 'spring-app'
@@ -453,10 +517,12 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
          static_configs:
            - targets: ['host.docker.internal:8080']
      ```
+
    - Instala Grafana (Docker: `docker run -d -p 3000:3000 grafana/grafana`) y añade Prometheus como fuente de datos.
    - Crea un dashboard en Grafana para visualizar `hello_requests_total`.
 
 **Desde el punto de vista del programador**:
+
 - **Qué haces**: Inyectas `MeterRegistry` en tu código, defines contadores o temporizadores (como `Counter` o `Timer`), y usas el endpoint `/actuator/prometheus`.
 - **Qué obtienes**: Métricas personalizadas (ej: número de llamadas a `/hello`) que puedes visualizar en herramientas como Grafana.
 - **Truco**: Usa tags en las métricas (`endpoint=/hello`) para filtrar en Prometheus/Grafana.
@@ -464,7 +530,9 @@ El objetivo es mostrarte cómo usar **Actuator** para exponer métricas y salud 
 ---
 
 ### Ejemplo Completo
+
 **Estructura del proyecto**:
+
 ```
 src/main/java/com/example/demo/
   - DemoApplication.java
@@ -475,6 +543,7 @@ pom.xml
 ```
 
 **Código completo**:
+
 - `pom.xml`:
   ```xml
   <dependencies>
@@ -492,7 +561,9 @@ pom.xml
       </dependency>
   </dependencies>
   ```
+
 - `application.yml`:
+
   ```yaml
   management:
     endpoints:
@@ -503,17 +574,25 @@ pom.xml
       health:
         show-details: always
   ```
+  
 - `HelloController.java` (como arriba).
 
 **Cómo probar**:
+
 1. Ejecuta la app (`mvn spring-boot:run`).
 2. Llama a `http://localhost:8080/hello` varias veces.
 3. Revisa métricas en `http://localhost:8080/actuator/prometheus`.
 4. Opcional: Configura Prometheus y Grafana para dashboards.
 
+
+
+
 ---
 
+
+
 ### Perspectiva del Programador
+
 - **Facilidad**: Actuator requiere solo una dependencia y un archivo de configuración. Micrometer es igual de simple si usas contadores básicos.
 - **Debugging**: Usa `/actuator/health` para verificar si tu app está viva. Usa `/actuator/metrics` para detectar cuellos de botella (ej: tiempo de respuesta).
 - **Escalabilidad**: Las métricas de Micrometer se integran con Prometheus, lo que te prepara para entornos de producción sin cambiar código.
@@ -523,9 +602,12 @@ pom.xml
   - No configurar Prometheus correctamente (verifica `targets` en `prometheus.yml`).
 
 **Siguientes pasos**:
+
 - Añade un `Timer` para medir el tiempo de ejecución de métodos:
+- 
   ```java
   Timer timer = Timer.builder("hello.duration").register(meterRegistry);
   timer.record(() -> /* tu lógica */);
   ```
+  
 - Explora otros endpoints de Actuator como `/actuator/info` para metadatos de la app.

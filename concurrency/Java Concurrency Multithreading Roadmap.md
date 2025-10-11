@@ -2,9 +2,9 @@
 
 <br>
 
-#### ref:
+**ref:**
 
-https://medium.com/javarevisited/the-concurrency-multithreading-bible-for-engineers-642d2c5c3a02
+`https://medium.com/javarevisited/the-concurrency-multithreading-bible-for-engineers-642d2c5c3a02`
 
 
 <br>
@@ -533,6 +533,7 @@ El paquete `java.util.concurrent.locks` en Java 21 proporciona herramientas para
 - **Caso de uso**: Controlar el acceso a un recurso compartido en un entorno multihilo donde necesitas evitar bloqueos indefinidos o implementar lógica condicional.
 
 **Ejemplo**:
+
 ```java
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -561,12 +562,14 @@ public class ContadorSeguro {
     }
 }
 ```
+
 - **Explicación**: El `ReentrantLock` asegura que solo un hilo modifique `contador` a la vez, evitando condiciones de carrera. El bloque `try-finally` garantiza que el candado se libere incluso si ocurre una excepción.
 
 #### **c. Interface `ReadWriteLock` y clase `ReentrantReadWriteLock`**
 - **Definición**: Proporciona dos candados: uno de lectura (`readLock`) y otro de escritura (`writeLock`). Varios hilos pueden adquirir el candado de lectura simultáneamente, pero el candado de escritura es exclusivo.
 - **Caso de uso**: Ideal para estructuras de datos donde las operaciones de lectura son frecuentes y las de escritura son menos comunes, como cachés o bases de datos en memoria.
 - **Ejemplo**:
+
 ```java
 import java.util.HashMap;
 import java.util.Map;
@@ -605,12 +608,14 @@ public class CacheSeguro {
     }
 }
 ```
+
 - **Explicación**: Múltiples hilos pueden leer el caché simultáneamente (`readLock`), pero las escrituras (`writeLock`) son exclusivas, optimizando el rendimiento para lecturas frecuentes.
 
 #### **d. Interface `Condition`**
 - **Definición**: Permite a los hilos esperar (`await`) y ser notificados (`signal` o `signalAll`) sobre condiciones específicas, similar a `wait/notify` en `synchronized`.
 - **Caso de uso**: Coordinar hilos que dependen de condiciones específicas, como en colas de productores-consumidores.
 - **Ejemplo**:
+
 ```java
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -664,12 +669,14 @@ public class ColaBloqueante {
     }
 }
 ```
+
 - **Explicación**: Usa `Condition` para implementar una cola bloqueante donde el productor espera si la cola está llena y el consumidor espera si está vacía.
 
 #### **e. Clase `StampedLock` (introducida en Java 8, relevante en Java 21)**
 - **Definición**: Un candado avanzado que ofrece tres modos: escritura, lectura y lectura optimista. La lectura optimista permite leer sin bloquear, validando luego si los datos son consistentes.
 - **Caso de uso**: Optimización en escenarios con muchas lecturas y pocas escrituras, como sistemas de configuración o datos que cambian raramente.
 - **Ejemplo**:
+
 ```java
 import java.util.concurrent.locks.StampedLock;
 
@@ -711,6 +718,7 @@ public class Posicion {
     }
 }
 ```
+
 - **Explicación**: La lectura optimista (`tryOptimisticRead`) mejora el rendimiento al evitar bloqueos, pero valida si los datos cambiaron durante la lectura.
 
 ---
@@ -748,7 +756,3 @@ public class Posicion {
   - Siempre libera candados en bloques `finally`.
   - Usa `tryLock` o tiempos de espera para evitar deadlocks.
   - Considera `StampedLock` para optimizar lecturas en aplicaciones de alto rendimiento.
-
----
-
-Si necesitas ejemplos más específicos, detalles sobre alguna clase o un caso de uso particular, ¡avísame!

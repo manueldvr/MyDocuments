@@ -40,6 +40,7 @@ public class Student {
 ```
 
 **Uso en un controlador Spring Boot**:
+
 ```java
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,6 +58,7 @@ public class StudentController {
 ```
 
 **Salida JSON**:
+
 ```json
 {
   "student_id": 1,
@@ -82,6 +84,7 @@ public class User {
 ```
 
 **Uso**:
+
 ```java
 @RestController
 public class UserController {
@@ -96,6 +99,7 @@ public class UserController {
 ```
 
 **Salida JSON**:
+
 ```json
 {
   "username": "juan123"
@@ -122,6 +126,7 @@ public class Event {
 ```
 
 **Uso**:
+
 ```java
 @RestController
 public class EventController {
@@ -136,6 +141,7 @@ public class EventController {
 ```
 
 **Salida JSON**:
+
 ```json
 {
   "name": "Concierto",
@@ -171,6 +177,7 @@ public class Employee {
 ```
 
 **Uso**:
+
 ```java
 @RestController
 public class DepartmentController {
@@ -188,6 +195,7 @@ public class DepartmentController {
 ```
 
 **Salida JSON**:
+
 ```json
 {
   "name": "IT",
@@ -216,6 +224,7 @@ public class Product {
 ```
 
 **Uso**:
+
 ```java
 @RestController
 public class ProductController {
@@ -239,12 +248,14 @@ public class ProductController {
 ```
 
 **Explicación**: `@JsonInclude(JsonInclude.Include.NON_NULL)` asegura que los campos con valores nulos no se incluyan en el JSON. También se puede configurar globalmente en `application.yml`:
+
 ```yaml
 spring:
   jackson:
     default-property-inclusion: non_null
 ```
-[](https://www.baeldung.com/spring-boot-customize-jackson-objectmapper)
+
+[Spring-boot Customize Jackson Objectmapper](https://www.baeldung.com/spring-boot-customize-jackson-objectmapper)
 
 #### **6. Personalizar serialización con `@JsonSerialize`**
 Usa un serializador personalizado para un campo o clase.
@@ -276,6 +287,7 @@ public class Project {
 ```
 
 **Uso**:
+
 ```java
 @RestController
 public class ProjectController {
@@ -290,6 +302,7 @@ public class ProjectController {
 ```
 
 **Salida JSON**:
+
 ```json
 {
   "name": "App Desarrollo",
@@ -316,6 +329,7 @@ public class Customer {
 ```
 
 **Uso**:
+
 ```java
 @RestController
 public class CustomerController {
@@ -331,6 +345,7 @@ public class CustomerController {
 ```
 
 **Salida JSON**:
+
 ```json
 {
   "id": 1,
@@ -339,7 +354,9 @@ public class CustomerController {
 }
 ```
 
-**Explicación**: `@JsonPropertyOrder` asegura que las propiedades se serialicen en el orden especificado.[](https://www.tutorialspoint.com/jackson_annotations/jackson_annotations_quick_guide.htm)
+**Explicación**: `@JsonPropertyOrder` asegura que las propiedades se serialicen en el orden especificado.
+
+[Jackson Annotations guide](https://www.tutorialspoint.com/jackson_annotations/jackson_annotations_quick_guide.htm)
 
 #### **8. Soporte para polimorfismo con `@JsonTypeInfo` y `@JsonSubTypes`**
 Maneja herencia y subtipos en JSON.
@@ -371,6 +388,7 @@ public class Cat extends Animal {
 ```
 
 **Uso**:
+
 ```java
 @RestController
 public class AnimalController {
@@ -385,6 +403,7 @@ public class AnimalController {
 ```
 
 **Salida JSON**:
+
 ```json
 {
   "type": "dog",
@@ -393,7 +412,7 @@ public class AnimalController {
 }
 ```
 
-**Explicación**: `@JsonTypeInfo` agrega un campo (`type`) para indicar el subtipo, y `@JsonSubTypes` mapea los nombres de los subtipos. Esto permite deserializar correctamente el JSON a la clase adecuada.[](https://www.javaguides.net/p/java-jackson-json-tutorial-with-examples.html)
+**Explicación**: `@JsonTypeInfo` agrega un campo (`type`) para indicar el subtipo, y `@JsonSubTypes` mapea los nombres de los subtipos. Esto permite deserializar correctamente el JSON a la clase adecuada.[Java Jackson json tutorial with examples](https://www.javaguides.net/p/java-jackson-json-tutorial-with-examples.html)
 
 ### **Configuración global en Spring Boot**
 Además de las anotaciones, puedes configurar Jackson globalmente en `application.yml` o mediante un bean `ObjectMapper`. Por ejemplo:
@@ -426,17 +445,26 @@ public class JacksonConfig {
 }
 ```
 
-**Explicación**: Esto configura Jackson para toda la aplicación, asegurando soporte para tipos de Java 8/21 (como `LocalDate`) y otras personalizaciones.[](https://www.baeldung.com/spring-boot-customize-jackson-objectmapper)
+**Explicación**: Esto configura Jackson para toda la aplicación, asegurando soporte para tipos de Java 8/21 (como `LocalDate`) y otras personalizaciones.[spring-boot customize jackson objectmapper](https://www.baeldung.com/spring-boot-customize-jackson-objectmapper)
 
 ### **Consideraciones con Java 21**
 - **Records**: Java 21 soporta records, que son ideales para DTOs. Puedes usar anotaciones de Jackson directamente en los records:
+
 ```java
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record Person(@JsonProperty("full_name") String name, int age) {}
 ```
+
 - **Módulo JavaTime**: Asegúrate de registrar `JavaTimeModule` para manejar tipos como `LocalDate` y `LocalDateTime` correctamente.
+
 - **Dependencias**: Spring Boot 3.x (compatible con Java 21) incluye Jackson por defecto (`jackson-databind`, `jackson-annotations`, `jackson-core`). No necesitas agregar dependencias adicionales a menos que uses módulos específicos.
 
 ### **Conclusión**
-Las anotaciones de Jackson en Spring Boot con Java 21 ofrecen un control granular sobre la serialización/deserialización de JSON. Desde renombrar propiedades hasta manejar polimorfismo o personalizar formatos, estas herramientas son esenciales para APIs RESTful. Los ejemplos anteriores cubren los casos más comunes, y puedes combinarlos según tus necesidades. Si necesitas ejemplos más específicos o tienes un caso particular, no dudes en preguntar.[](https://www.baeldung.com/jackson-annotations)[](https://springframework.guru/jackson-annotations-json/)[](https://medium.com/trabe/customize-your-serialization-using-jackson-annotations-d6b81c4785a6)
+Las anotaciones de Jackson en Spring Boot con Java 21 ofrecen un control granular sobre la serialización/deserialización de JSON. Desde renombrar propiedades hasta manejar polimorfismo o personalizar formatos, estas herramientas son esenciales para APIs RESTful. Los ejemplos anteriores cubren los casos más comunes, y puedes combinarlos según tus necesidades. Si necesitas ejemplos más específicos o tienes un caso particular, no dudes en preguntar.
+
+[jackson-annotations](https://www.baeldung.com/jackson-annotations)
+
+[jackson-annotations Json](https://springframework.guru/jackson-annotations-json/)
+
+[jackson-annotations](https://medium.com/trabe/customize-your-serialization-using-jackson-annotations-d6b81c4785a6)

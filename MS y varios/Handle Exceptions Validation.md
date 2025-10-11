@@ -1,6 +1,14 @@
-Para manejar la validación de que la fecha `P_FECHA_DESDE` debe estar en el pasado en tu controlador, puedes usar la anotación `@Past` de Jakarta Bean Validation, que verifica que una fecha sea anterior a la fecha actual. Esto se integra perfectamente con tu configuración existente (`@Validated` y el `GlobalExceptionHandler`). A continuación, te explico cómo implementarlo y cómo asegurarte de que funcione con tu caso.
+# Validaciones
 
-### Implementación
+# GlobalException
+
+
+
+Para manejar la validación de que la fecha `P_FECHA_DESDE` debe estar en el pasado en tu controlador, puedes usar la anotación `@Past` de Jakarta Bean Validation, que verifica que una fecha sea anterior a la fecha actual.  
+
+Esto se integra perfectamente con tu configuración existente (`@Validated` y el `GlobalExceptionHandler`).
+
+## Implementación
 
 #### 1. Agregar `@Past` al parámetro `P_FECHA_DESDE`
 Modifica tu método en el controlador para incluir la anotación `@Past`. Además, como estás recibiendo la fecha como `String` a través de `@RequestParam`, necesitas asegurarte de que Spring pueda convertir ese `String` a un tipo de fecha (como `LocalDate`) para que `@Past` funcione. Aquí hay un ejemplo ajustado:
@@ -44,7 +52,8 @@ public class OperacionesRepipagoController {
 }
 ```
 
-#### Cambios realizados:
+### Cambios realizados:
+
 - **Cambio de tipo `String` a `LocalDate`**:
   - Cambié el tipo del parámetro `fechaDesde` y `fechaHasta` de `String` a `LocalDate` porque `@Past` funciona con tipos de fecha como `LocalDate`, `LocalDateTime`, `Date`, etc., no con `String` directamente.
 - **`@DateTimeFormat`**:
@@ -52,7 +61,8 @@ public class OperacionesRepipagoController {
 - **`@Past`**:
   - Esta anotación valida que `fechaDesde` sea una fecha anterior a la fecha actual (basada en el reloj del sistema al momento de la solicitud).
 
-#### 2. `GlobalExceptionHandler` (sin cambios necesarios)
+### 2. `GlobalExceptionHandler` (sin cambios necesarios)
+
 Tu manejador de excepciones ya está configurado para capturar `ConstraintViolationException`, que se lanzará si `@Past` falla. No necesitas modificarlo, pero para referencia, aquí está cómo se ve:
 
 ```java
@@ -63,6 +73,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
+
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
@@ -77,20 +88,27 @@ public class GlobalExceptionHandler {
     }
 }
 ```
+
 (Asumo que `ErrorResponse` es una clase personalizada con un método `put` para agregar errores).
 
-#### 3. Pruebas
+## 3. Pruebas
 - **Fecha en el pasado (válida)**:
+
   ```
   localhost:8080/api/v1/rapipago/iv_operaciones_rapipago_total_diario?P_FECHA_DESDE=01/01/2024&P_FECHA_HASTA=31/12/2024
   ```
+
   Respuesta: `200 OK` con `"Procesado: 2024-01-01 - 2024-12-31"`.
 
 - **Fecha en el futuro (inválida)**:
+
   ```
   localhost:8080/api/v1/rapipago/iv_operaciones_rapipago_total_diario?P_FECHA_DESDE=01/01/2026&P_FECHA_HASTA=31/12/2024
+
   ```
+  
   Respuesta: `400 Bad Request` con algo como:
+  
   ```json
   {
     "errors": [
@@ -98,13 +116,16 @@ public class GlobalExceptionHandler {
     ]
   }
   ```
+
   (El formato exacto depende de cómo esté implementado `ErrorResponse`).
 
 - **Fecha vacía (inválida)**:
+
   ```
   localhost:8080/api/v1/rapipago/iv_operaciones_rapipago_total_diario?P_FECHA_DESDE=&P_FECHA_HASTA=31/12/2024
   ```
   Respuesta: `400 Bad Request` con:
+
   ```json
   {
     "errors": [
@@ -113,10 +134,11 @@ public class GlobalExceptionHandler {
   }
   ```
 
-#### Notas importantes
+### Notas importantes
 1. **Formato de fecha**:
    - Asegúrate de que el formato especificado en `@DateTimeFormat(pattern = "dd/MM/yyyy")` coincida con cómo envías las fechas en la URL. Si usas otro formato (como `yyyy-MM-dd`), ajusta el `pattern` en consecuencia.
    - Si el formato no coincide, Spring lanzará una excepción de conversión (`TypeMismatchException` o similar), que no será capturada por `ConstraintViolationException`. En ese caso, necesitarías agregar un manejador adicional:
+
      ```java
      @ExceptionHandler(BindException.class)
      public ResponseEntity<String> handleBindException(BindException ex) {
@@ -129,6 +151,7 @@ public class GlobalExceptionHandler {
 
 3. **Dependencias**:
    - Asegúrate de que tienes `spring-boot-starter-web` y `spring-boot-starter-validation` en tu `pom.xml`:
+  
      ```xml
      <dependency>
          <groupId>org.springframework.boot</groupId>
@@ -140,7 +163,14 @@ public class GlobalExceptionHandler {
      </dependency>
      ```
 
-### Alternativa: Validación manual
+
+<br>
+<br>
+<br>
+
+
+## Alternativa: Validación manual
+
 Si no quieres cambiar el tipo a `LocalDate` y prefieres mantener `String`, puedes hacer la validación manualmente:
 
 ```java
@@ -159,6 +189,3 @@ public ResponseEntity<?> obtenerOperacionesRapipagoTotalDiario(
 }
 ```
 Esto te da más control, pero pierdes la integración automática con el `GlobalExceptionHandler` para mensajes personalizados por campo.
-
-### Pregunta
-¿Prefieres la solución con `@Past` o la validación manual? Si tienes un formato de fecha diferente al `dd/MM/yyyy` o necesitas más validaciones (como que `P_FECHA_DESDE` sea menor que `P_FECHA_HASTA`), avísame y lo ajustamos. ¿Qué opinas?

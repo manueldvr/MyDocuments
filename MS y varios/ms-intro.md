@@ -9,7 +9,9 @@ manteniendo la estructura HATEOAS y
 documentando con Swagger.  
 
 ---
+
 prompts:
+
 - Cómo construir un BFF (Back For Front) based in Spring Boot, Spring Data, con configuracion para ser desplegado en OpenShift y con propiedades para conexion a base de datos Oracle.
 - también que cumpla con los requerimientos de un microservicio y con HATEOAS
 - y lo mismo pero que este documentado con swagger
@@ -17,6 +19,7 @@ prompts:
 - Lo mismo agregando una operación de consulta GET con el siguiente request URL :
 `http://denodo-dv-01.prod.gire.com:9090/server/rapipago/certant_api/views/iv_reporte_operaciones_total_mensual?P_COD_CIA=6&P_FECHA_DESDE=1%2F3%2F2024&P_FECHA_HASTA=2%2F3%2F2024&%24displayRESTfulReferences=true&%24format=JSON`
 que en caso de exito retorne:
+
 ```json
 {
   "name": "string",
@@ -66,7 +69,8 @@ que en caso de exito retorne:
       "message": "string"
     }
   ]
-}```
+}
+```
 
 y en caso de que esta operación de un error HttpCode 400 , Bad Request, retorne:
 
@@ -81,7 +85,8 @@ y en caso de que esta operación de un error HttpCode 400 , Bad Request, retorne
       "httpErrorReturnedBySource": "string"
     }
   ]
-}```
+}
+```
 
 - Por qué utilizaste WebClient? ¿cuál otro podrías haber utilizado?
 
@@ -177,6 +182,7 @@ management.endpoints.web.exposure.include=health,info
 ---
 
 ## 📌 **3️⃣ Crear la Clase Modelo `ReporteOperacionesMensual`**
+
 ```java
 import lombok.Data;
 import java.util.List;
