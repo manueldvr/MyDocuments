@@ -109,6 +109,7 @@ public class Book {
 ```
 
 **Explicación de las anotaciones**:
+
 - **`@OneToMany`**: En `Author`, indica que un autor puede tener muchos libros. El `mappedBy = "author"` especifica que la relación está gestionada por el campo `author` en la entidad `Book`.
 - **`@ManyToOne`**: En `Book`, indica que muchos libros pueden pertenecer a un solo autor.
 - **`@JoinColumn`**: Define la columna `author_id` en la tabla `Book` como clave foránea.
@@ -366,6 +367,7 @@ curl -X POST http://localhost:8080/api/authors \
 ```
 
 ### **Notas importantes**
+
 - **Configuración previa**: Asegúrate de que las entidades `Author` y `Book`, los repositorios `AuthorRepository` y `BookRepository`, y la configuración de la base de datos (como en el `application.properties` del ejemplo anterior) estén correctamente definidos.
 - **Cascade**: La propiedad `cascade = CascadeType.ALL` en la relación `@OneToMany` asegura que al guardar el `Author`, los `Book` asociados también se guarden automáticamente.
 - **Base de datos**: Este ejemplo asume que usas una base de datos como H2 (como en el ejemplo anterior). Si usas otra base de datos (MySQL, PostgreSQL, etc.), ajusta la configuración en `application.properties`.

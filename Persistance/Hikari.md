@@ -1,9 +1,12 @@
-# HikariCP
+# Hikari
 
 <br>  
 
-Es un pool de conexiones predeterminado en Spring Boot, y su configuración se realiza mediante la clase **HikariConfig**.  
-Esta clase ofrece numerosos parámetros para ajustar el comportamiento y rendimiento del pool según las necesidades de tu aplicación. A continuación, se presenta una explicación detallada de los principales parámetros modificables, junto con ejemplos y señalando algunos posibles conflictos entre ellos.
+Es un pool de conexiones predeterminado en Spring Boot, y su configuración se realiza mediante la clase **HikariConfig**.   
+
+Esta clase ofrece numerosos parámetros para ajustar el comportamiento y rendimiento del pool según las necesidades de tu aplicación. 
+
+A continuación, se presenta una explicación detallada de los principales parámetros modificables, junto con ejemplos y señalando algunos posibles conflictos entre ellos.
 
 <br>
 <br>
@@ -308,6 +311,7 @@ La configuración  permite optimizar el rendimiento y la estabilidad de la conex
 # Estado Actual
 
 estado de la conn para OL
+
 ```
 =======================
 DATA SOURCE RAPIPAGO OL 

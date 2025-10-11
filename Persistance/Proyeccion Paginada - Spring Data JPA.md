@@ -1,7 +1,7 @@
 #  Spring Data JPA - Proyeccion Paginada - Controller & Service
 
 
-### en Spring Data JPA qué ejemplos puedes dar con Proyeccion Paginada (DTOs Personalizados) con su respestivos Controller y Service?
+En Spring Data JPA qué ejemplos puedes dar con Proyeccion Paginada (DTOs Personalizados) con su respestivos Controller y Service?
 
 
 

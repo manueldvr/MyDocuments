@@ -1,11 +1,9 @@
-# Multiple Data Source Uses
+# Multiple Data Source
+# @NativeQuery
+# @Query
 
 
-
-Si tienes **varios `DataSource`** configurados en tu aplicación Spring Boot y  
-necesitas seleccionar uno específico para ejecutar un **store procedure** o  
-una **query nativa**, hay varias formas de hacerlo según la tecnología que  
-estés usando (JPA, JdbcTemplate o NamedParameterJdbcTemplate).  
+Si tienes **varios `DataSource`** configurados en tu aplicación Spring Boot y necesitas seleccionar uno específico para ejecutar un **store procedure** o una **query nativa**, hay varias formas de hacerlo según la tecnología que  estés usando (JPA, JdbcTemplate o NamedParameterJdbcTemplate).  
 
 ---
 

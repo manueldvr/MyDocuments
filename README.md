@@ -13,6 +13,7 @@ docs, tutorials, books
   - **OO**
     - [Orientación a Objetos en Java (OOP)](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/OO-Paterns.md)
     - [static & inmutable]()
+    - [interfaces y clases abstractas](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/InterfaceAbstract.md)
     - [Patrones: Singleton, Factory, Observer]()
     - [Template]()
     - [Strategy]()
@@ -29,13 +30,16 @@ docs, tutorials, books
 - **Clean Code**
     - [basics](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Clean%20Code.md)
 - **Spring**
-  - [ID](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Spring_1.md)
-  - []()
-  - []()
-  - []()
-  - [¿Cómo optimizar Spring Boot con Java 21 para Escalado Extremo que debe resolver 1 million de servicios RESTfull por segundo?](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/Asynchronous%20%26%20Non-Blocking.md)
+  - [error-Injection](https://github.com/manueldvr/MyDocuments/blob/master/spring/error-injection.md)
+  - [Overview](https://github.com/manueldvr/MyDocuments/blob/master/spring/Overview.md)
+  - [Projections]()
+  - [¿Cómo optimizar Spring Boot con Java 21 para Escalado Extremo que debe resolver 1 million de servicios RESTfull por segundo?]()
   - **Persistencia**
     - []()
+    - [JPA]()
+    - [JPA 1:N]()
+    - [Multiple Data Sources]()
+    - [Hikari]()
 - **TDD**
   - []()  
 - **Monitoreo**
