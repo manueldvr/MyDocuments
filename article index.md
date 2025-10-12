@@ -1,23 +1,27 @@
-#  █ References █
+#  References
 
+<br>
+<br>
 
-
-## _Spring Boot_____
+# _Spring Boot_____
 
 ### ■ How to Write Clean and Maintainable Code in Spring Boot Projects
 https://medium.com/@rsoni14378/how-to-write-clean-and-maintainable-code-in-spring-boot-projects-%EF%B8%8F-ea6d5cad5bc1
 
 
-### ■* Generic Api Response and Global Exception Handling in Spring Boot  
+### ■ Generic Api Response and Global Exception Handling in Spring Boot  
 https://medium.com/@vino7tech/generic-apiresponse-and-global-exception-handling-in-spring-boot-221ce807bca6
 
-### ■* Spring Boot Global Exception Handler  
+### ■ Spring Boot Global Exception Handler  
 https://medium.com/@aedemirsen/spring-boot-global-exception-handler-842d7143cf2a
 
-### ■* Spring Microservice Global Exception Handling and Field validations  
+### ■ Spring Microservice Global Exception Handling and Field validations  
 https://medium.com/@kousikpaul/microservice-global-exception-handling-and-field-validations-3fc955a80692
 
-## Spring Boot Web____
+<br>
+<br>
+
+# Spring Boot Web____
 
 ### ■ Mastering WebClient in Spring Boot: When and Why to Use It Over RestTemplate
 https://medium.com/@psdevraye/mastering-webclient-in-spring-boot-when-and-why-to-use-it-over-resttemplate-03f0643421dc  
@@ -35,7 +39,10 @@ A reactive approach in Spring Boot, using Spring WebFlux and Project Reactor, pr
 - Reactive Security — Non-blocking authentication and authorization.
 - Observability
 
-## _Spring Data JPA_____
+<br>
+<br>
+
+# _Spring Data JPA_____
 
 ### ■ Top 10 Spring Data JPA Mistakes and How to Avoid Them (With Examples)
 https://rameshfadatare.medium.com/top-10-spring-data-jpa-mistakes-and-how-to-avoid-them-with-examples-1359083797b1
@@ -44,17 +51,20 @@ https://rameshfadatare.medium.com/top-10-spring-data-jpa-mistakes-and-how-to-avo
 
 ### ■ Spring Data JPA: Handling Large Data Sets with Streaming  
 https://medium.com/spring-boot/spring-data-jpa-handling-large-data-sets-with-streaming-adf1082b6cdc  
+
 - Why Use Streaming? Key Concepts
 - Implementation steps
 - try-catch-resources block
 
+<br>
+<br>
 
-
-## _Asynchronous programming_____
+# _Asynchronous programming_____
 
 
 ### ■ Avoid These Mistakes While Using @Async in Spring Boot Project  
 https://medium.com/javarevisited/avoid-these-mistakes-while-using-async-in-spring-boot-project-428b85893bb2
+
 - Not configuring @Async Properly
 - Improper Exception Handling And Ignoring Return Values
 - Do Not Block Async Methods
@@ -62,19 +72,27 @@ https://medium.com/javarevisited/avoid-these-mistakes-while-using-async-in-sprin
 - Calling Async Method from Same Class
 
 
-## _API____
+<br>
+<br>
+
+# _API____
 
 ### ■ API Everything: A Developer’s Guide to API Design, Security, and Performance  
 https://medium.com/@ksaquib/api-everything-a-developers-guide-to-api-design-security-and-performance-6725408b5997  
-Basics
-API Designing  
-API Security  
-API Performance  
-API Versioning  
-API Testing  
-API Documentation
 
-## _Java_____
+- Basics  
+- API Designing  
+- API Security  
+- API Performance  
+- API Versioning  
+- API Testing  
+- API Documentation
+
+
+<br>
+<br>
+
+# _Java_____
 
 ### ■ Java: 4 Lambda Expressions that are Very Useful  
 https://medium.com/javarevisited/java-4-lambda-expression-tips-that-are-very-useful-8ce22f42a310
