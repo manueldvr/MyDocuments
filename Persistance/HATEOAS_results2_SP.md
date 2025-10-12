@@ -4,9 +4,13 @@
 Hi, please, make a GET HATEOAS RESTful service using Spring Boot.
 
 The Controller should accept the following path with its mandatory parameters: 
-{{base_url}}/views/Iv_transmision_umbral?P_COD_CIA=603&P_FECHA_DESDE=01%2F01%2F2024&P_FECHA_HASTA=03%2F01%2F2024&%24displayRESTfulReferences=true&%24format=JSON  
+
+```
+{{base_url}}/views/Iv_transmision_umbral?P_COD_CIA=603&P_FECHA_DESDE=01%2F01%2F2024&P_FECHA_HASTA=03%2F01%2F2024&%24displayRESTfulReferences=true&%24format=JSON
+```  
 and  accept the follwing parameters with itsname, optionallity, description and type separated by commas:
 
+```
 TIPO , optional,Virtual DataPort type, String
 ESTADO , optional,Virtual DataPort type, String
 COD_SERVICIO , optional,Virtual DataPort type, String
@@ -21,26 +25,33 @@ $expand, 	optional, Roles to expand in the query	, array[string]
 $filter	, optional, Filters the rows of a view using any condition. Any expression that can appear in the WHERE clause of a VQL query can be used., 	string  
 $format, 	optional,Defines the output format of the query, 	string	 
 $groupby,	optional,Comma-separated list of fields to group by with	, array[string]  
-$having,	optional,Comma-separated list of fields to add to the HAVING clause of the query	, array[string]	 
+$having,	optional,Comma-separated list of fields to add to the HAVING clause of the query	, array[string]
 $orderby,	optional,Sorts the results by one or more fields. It is a comma-separated list of fields, each one followed by the modifier ASC (for ascending order) and DESC (for descending order).	,array[string]  
 $select,	optional,Comma-separated list of fields to be returned in the result	, array[string]  
 $jsoncallback,optional,	The JSON representation can return the data of a view prefixed with the name of a function. This is called JSON with padding or JSONP. That way when a browser receives the response it receives a script rather than data.	,string  
 $noescapehtml,optional,  List of comma-separated fields whose values will not be HTML escaped.	,array[string]  
 User-agent	, optional, By including this header communication between the web service and the Virtual DataPort will be configured with this value.,	string  
+```
 
 And returns:
 
+```json
 {"name":"Iv_transmision_umbral","elements":[{"ENTIDAD":603,"ARCHIVO_COMPRIMIDO":"603G1016.ZIP","BYTES":300,"ARCHIVO":"PR090124","TIPO":"Enviado","ESTADO":"OK","FECHA_HORA":"2024-01-10T01:06:16","COD_SERVICIO":5,"DESC_SERVICIO":"RAPIPAGO","FECHA":"10/01/2024"},{"ENTIDAD":603,"ARCHIVO_COMPRIMIDO":"603G0917.ZIP","BYTES":1200,"ARCHIVO":"PR080124","TIPO":"Enviado","ESTADO":"OK","FECHA_HORA":"2024-01-09T01:08:04","COD_SERVICIO":5,"DESC_SERVICIO":"RAPIPAGO","FECHA":"09/01/2024"}],"links":[{"rel":"self","href":"http://denodo-dv-01.prod.gire.com:9090/server/rapipago/certant_api/views/Iv_transmision_umbral?P_FECHA_HASTA=10%2F01%2F2024&P_FECHA_DESDE=01%2F01%2F2024&P_COD_CIA=603&%24displayRESTfulReferences=true&%24format=JSON&%24start_index=0&%24count=2"},{"rel":"prev","title":"Previous interval","href":"?P_FECHA_HASTA=10%2F01%2F2024&%24displayRESTfulReferences=true&P_FECHA_DESDE=01%2F01%2F2024&P_COD_CIA=603&%24format=JSON&%24count=2"},{"rel":"next","title":"Next interval","href":"?P_FECHA_HASTA=10%2F01%2F2024&%24displayRESTfulReferences=true&P_FECHA_DESDE=01%2F01%2F2024&%24start_index=2&P_COD_CIA=603&%24format=JSON&%24count=2"}]}
-
+```
 
 The Service use a Repository that execute the following store procedure: 
 UMBRAL.get_transmision_umbral with the following parameters:
+
+```
     p_cod_cia     IN VARCHAR2 DEFAULT NULL,
     p_fecha_desde IN VARCHAR2,
     p_fecha_hasta  IN VARCHAR2,
     p_result      OUT SYS_REFCURSOR
+```
 	
 and returns a list of TransmicionUmbralResult elements, where TransmicionUmbralResult represents elements or rows containing:
+
+```
    ENTIDAD,
    ARCHIVO_COMPRIMIDO,
    BYTES,
@@ -51,7 +62,7 @@ and returns a list of TransmicionUmbralResult elements, where TransmicionUmbralR
    FECHA_HORA,
    COD_SERVICIO,
    DESC_SERVICIO
-
+```
 
 Please explain step y step all the necessary code at the controller, the validations beeded for the parameters. 
 And the service should execute a Store Procedure through a Persistance API based on Spring Data.
@@ -63,6 +74,7 @@ ____________/
 
 field	description	type	list
 
+```
 $count,	Used for pagination in view resources,	integer($int32)  
 $start_index,	Used for pagination in view resources,	integer($int32)  
 $displayRESTfulReferences,	By default, the result of requesting a view contains, in each row, a link to the row itself and, for each association of the view, a link to traverse the association. By using this parameter, you can configure this behavior. ,	boolean  
@@ -76,7 +88,7 @@ $select,	Comma-separated list of fields to be returned in the result	, array[str
 $jsoncallback,	The JSON representation can return the data of a view prefixed with the name of a function. This is called JSON with padding or JSONP. That way, when a browser receives the response, it receives a script rather than data.	,string  
 $noescapehtml	,List of comma-separated fields whose values will not be HTML escaped.	,array[string]  
 User-agent	,By including this header, communication between the web service and the Virtual DataPort will be configured with this value.,	string  
-
+```
 
 
 

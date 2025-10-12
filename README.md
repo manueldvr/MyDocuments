@@ -26,6 +26,7 @@ docs, tutorials, books
   - **Concurrencia**
     - [@Async, Future, Completable Future, y Executor Service API](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/concurrencia_1.md)
     - [@Async vs @Transactional](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Async%20vs%20Transactional.md)
+    -[ Ultimate Java Concurrency & Multithreading Roadmap]()
     - [Tutorial: Usando @Async en Spring Boot](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/concurrencia_Async.md)
 - **Clean Code**
     - [basics](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Clean%20Code.md)
@@ -35,11 +36,13 @@ docs, tutorials, books
   - [Projections]()
   - [¿Cómo optimizar Spring Boot con Java 21 para Escalado Extremo que debe resolver 1 million de servicios RESTfull por segundo?]()
   - **Persistencia**
-    - []()
     - [JPA]()
     - [JPA 1:N]()
-    - [Multiple Data Sources]()
+    - [Multiple Data Sources @Query and @NativeQuery]()
+    - [Multiple Data Sources Config]()
     - [Hikari]()
+    - [H2]()
+    - [Transactions]()
 - **TDD**
   - []()  
 - **Monitoreo**

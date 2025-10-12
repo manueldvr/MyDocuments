@@ -21,6 +21,7 @@ Cuando se especifica `readOnly = true`, se indica que la transacción es de **so
 En Spring Boot, `@Transactional(readOnly = true)` se usa frecuentemente en aplicaciones que trabajan con bases de datos a través de Spring Data JPA o Hibernate. Por ejemplo, se aplica en métodos de servicios o repositorios que solo leen datos. Spring Boot configura automáticamente el gestor de transacciones (`PlatformTransactionManager`) según el proveedor de persistencia detectado (como JPA, JDBC, etc.).
 
 ### **4. Ejemplo de uso**
+
 ```java
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,6 +79,7 @@ public class Application {
 - En transacciones complejas donde la propagación o el contexto transaccional no está claro.
 
 ### **10. Ejemplo práctico con Spring Data JPA**
+
 ```java
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {

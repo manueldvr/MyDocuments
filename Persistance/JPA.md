@@ -7,6 +7,7 @@ Te proporcionaré un ejemplo claro de una relación **1:N** (uno a muchos) usand
 ### **Paso 1: Definir las entidades**
 
 #### Entidad `Author` (Uno)
+
 ```java
 import jakarta.persistence.*;
 import java.util.ArrayList;
@@ -241,18 +242,16 @@ Al ejecutar la aplicación y consultar el endpoint `/api/authors/1` (o el ID cor
 Este código muestra cómo implementar y consultar una relación 1:N con Spring JPA de manera práctica y eficiente. Si necesitas más detalles o un caso más complejo, házmelo saber.
 
 
-
-
-
-
-
 Te mostraré cómo realizar un **insert** de un `Author` con dos `Book` asociados en una relación **1:N** usando **Spring Data JPA**. El ejemplo se basa en las entidades definidas anteriormente (`Author` y `Book`) y se enfoca en insertar un autor con dos libros en la base de datos.
+
+
 
 ### **Código para insertar un Author con dos Books**
 
 A continuación, te proporciono un ejemplo completo que incluye un controlador REST con un endpoint para realizar el insert de un `Author` con dos `Book`. El código asume que las entidades `Author` y `Book`, así como los repositorios `AuthorRepository` y `BookRepository`, ya están definidos como en el ejemplo anterior.
 
-<xaiArtifact artifact_id="2308236e-0653-42e3-8fd0-2b6f3f7776df" artifact_version_id="fbe0838f-e38d-4ed5-b4ff-c8cf3e0c0b4f" title="AuthorController.java" contentType="text/java">
+
+```java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -312,9 +311,10 @@ class AuthorRequest {
         this.book2Title = book2Title;
     }
 }
-</xaiArtifact>
+```
 
 ### **Explicación del código**
+
 1. **Controlador REST**:
    - El método `createAuthorWithBooks` recibe un JSON con el nombre del autor y los títulos de los dos libros a través de un DTO (`AuthorRequest`).
    - Se crea una instancia de `Author` con el nombre proporcionado.
@@ -340,6 +340,7 @@ Puedes usar una herramienta como **Postman** o **curl** para enviar una solicitu
 ```
 
 **Solicitud con curl**:
+
 ```bash
 curl -X POST http://localhost:8080/api/authors \
 -H "Content-Type: application/json" \
@@ -347,6 +348,7 @@ curl -X POST http://localhost:8080/api/authors \
 ```
 
 **Respuesta esperada**:
+
 ```json
 {
     "id": 1,
@@ -373,4 +375,3 @@ curl -X POST http://localhost:8080/api/authors \
 - **Base de datos**: Este ejemplo asume que usas una base de datos como H2 (como en el ejemplo anterior). Si usas otra base de datos (MySQL, PostgreSQL, etc.), ajusta la configuración en `application.properties`.
 - **Validación**: Para producción, podrías añadir validaciones en el DTO (por ejemplo, con `@NotNull` o `@NotBlank` usando la dependencia `spring-boot-starter-validation`).
 
-Si necesitas más detalles, como agregar validaciones, manejar excepciones, o un ejemplo con un servicio en lugar de un controlador, házmelo saber.

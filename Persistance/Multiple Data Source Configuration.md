@@ -64,6 +64,7 @@ Sí, esta clase configura un **DataSource** en un proyecto **Spring Boot** con *
 ## **Explicación de la Clase `GlDataSourceConfig`**
 
 ### **1. Anotaciones en la clase**
+
 ```java
 @Configuration
 @EnableJpaRepositories(
@@ -72,6 +73,7 @@ Sí, esta clase configura un **DataSource** en un proyecto **Spring Boot** con *
         transactionManagerRef = "glTransactionManager"
 )
 ```
+
 - **`@Configuration`**: Indica que esta clase es una configuración de Spring.
 - **`@EnableJpaRepositories`**:
   - `basePackages`: Indica en qué paquete se encuentran los repositorios JPA asociados a este **DataSource**.
@@ -100,12 +102,14 @@ public DataSource glDataSource() {
 ---
 
 ### **3. Configuración de `JdbcTemplate`**
+
 ```java
 @Bean(name = "glJdbcTemplate")
 public JdbcTemplate glJdbcTemplate(@Qualifier("glDataSource") DataSource glDataSource) {
     return new JdbcTemplate(glDataSource);
 }
 ```
+
 - **`JdbcTemplate`** es una clase de Spring que facilita el acceso a la base de datos usando **JDBC**.
 - **`@Qualifier("glDataSource")`**: Especifica que debe usarse el `glDataSource` para este **JdbcTemplate**.
 
@@ -114,6 +118,7 @@ public JdbcTemplate glJdbcTemplate(@Qualifier("glDataSource") DataSource glDataS
 ---
 
 ### **4. Configuración de `EntityManagerFactory`**
+
 ```java
 @Bean(name = "glEntityManagerFactory")
 public LocalContainerEntityManagerFactoryBean glEntityManagerFactory(
@@ -132,6 +137,7 @@ public LocalContainerEntityManagerFactoryBean glEntityManagerFactory(
     return em;
 }
 ```
+
 - **`@Bean(name = "glEntityManagerFactory")`**: Crea un **EntityManagerFactory** llamado `"glEntityManagerFactory"`.
 - **`setDataSource(glDataSource)`**: Usa el **DataSource** configurado anteriormente.
 - **`setPackagesToScan("com.gire.rapipago.transactions.entities.gl.denodo")`**:
@@ -164,9 +170,10 @@ public PlatformTransactionManager bkTransactionManager(
 
 ## **📌 Resumen**
 Esta clase configura un **DataSource** adicional en Spring Boot para manejar conexiones con una base de datos específica. Los componentes principales son:
-1. **`glDataSource`**: Configura la conexión a la base de datos.
-2. **`glJdbcTemplate`**: Permite ejecutar consultas SQL con JDBC.
-3. **`glEntityManagerFactory`**: Configura Hibernate y JPA para manejar entidades.
+
+1.  **`glDataSource`**: Configura la conexión a la base de datos.  
+2. **`glJdbcTemplate`**: Permite ejecutar consultas SQL con JDBC.  
+3. **`glEntityManagerFactory`**: Configura Hibernate y JPA para manejar entidades.  
 4. **`glTransactionManager`**: Maneja transacciones sobre esta base de datos.
 
 Esta configuración permite que los repositorios JPA de `com.lll.rapipago.transactions.repository.gl` usen este DataSource en lugar del principal.
@@ -190,6 +197,7 @@ En términos simples, **es un contenedor que configura y proporciona un `EntityM
 .  
 
 **Ejemplo en la configuración anterior:**
+
 ```java
 @Bean(name = "glEntityManagerFactory")
 public LocalContainerEntityManagerFactoryBean glEntityManagerFactory(
@@ -210,19 +218,18 @@ public LocalContainerEntityManagerFactoryBean glEntityManagerFactory(
     return em;
 }
 ```
+
 👉 **Propósito:** Configura una **fábrica de `EntityManager`** asociada a un **DataSource**, escanea las entidades y usa Hibernate como proveedor de JPA.
 
-.  
-.  
+ 
+<br>  
 
 ## **¿Para qué sirve?**
 - Permite a Spring **gestionar automáticamente `EntityManagerFactory`**, en lugar de crearlo manualmente.
 - Facilita la **configuración de JPA y Hibernate** en una aplicación Spring Boot.
 - Se puede usar para definir múltiples bases de datos en una misma aplicación (como en tu caso).
 
-.  
-.
-  
+<br>
   
 ## 📌 Componentes Clave en `LocalContainerEntityManagerFactoryBean`
 Veamos qué hacen los métodos clave que se usan en su configuración:

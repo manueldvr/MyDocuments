@@ -3,14 +3,16 @@
 # @Query
 
 
-Si tienes **varios `DataSource`** configurados en tu aplicación Spring Boot y necesitas seleccionar uno específico para ejecutar un **store procedure** o una **query nativa**, hay varias formas de hacerlo según la tecnología que  estés usando (JPA, JdbcTemplate o NamedParameterJdbcTemplate).  
+Si tienes **varios `DataSource`** configurados en tu aplicación Spring Boot y necesitas seleccionar uno específico para ejecutar un **store procedure** o una **query nativa**, hay varias formas de hacerlo según la tecnología que  estés usando:  
+- JPA  
+- JdbcTemplate  
+- NamedParameterJdbcTemplate).  
 
----
 
 ## **🔹 Opción 1:**  
 ## Usar `@PersistenceContext` con el `EntityManager` correcto (JPA)
 
-Si estás usando JPA (`@Query` o `EntityManager`),  
+Si estás usando JPA (`@Query` o `EntityManager`,  
 puedes inyectar el **`EntityManager`** correcto utilizando el `EntityManagerFactory`  
 asociado al `DataSource` deseado.
 
@@ -66,6 +68,7 @@ public class GlStoreProcedureService {
 Si prefieres usar `JdbcTemplate`, puedes inyectar el correcto usando `@Qualifier`.
 
 ### **📌 Inyección en el Servicio**
+
 ```java
 @Service
 public class GlJdbcService {
@@ -134,10 +137,12 @@ public class GlNamedJdbcService {
 
 Si necesitas ejecutar un **store procedure** y seleccionar el **data source específico**, la mejor opción suele ser **JdbcTemplate con `@Qualifier`**.
 
-.  
-.  
 
-## Como sería para @NativeQuery o @Query
+<br>
+<br>
+<br>
+
+## @NativeQuery o @Query
 
 
 
@@ -145,7 +150,8 @@ Si quieres usar `@Query(nativeQuery = true)` en un **repositorio JPA** (`JpaRepo
 
 Dado que tienes **múltiples `DataSource`**, debes anotar el repositorio con `@Repository` y asociarlo a la configuración correcta.
 
----
+<br>
+
 
 ## **📌 Configuración de un Repositorio con `@Query(nativeQuery = true)`**
 
@@ -153,7 +159,8 @@ Supongamos que tienes una entidad `Operacion` y quieres hacer una consulta nativ
 
 ```java
 @Entity
-@Table(name = "OPERACION", schema = "umbral")  // El schema debe coincidir con el definido en la config
+@Table(name = "OPERACION", schema = "umbral")  
+// El schema debe coincidir con el definido en la config
 public class Operacion {
     
     @Id
