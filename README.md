@@ -34,7 +34,7 @@ docs, tutorials, books
 - **Spring**
   - [error-Injection](https://github.com/manueldvr/MyDocuments/blob/master/spring/error-injection.md)
   - [Overview](https://github.com/manueldvr/MyDocuments/blob/master/spring/Overview.md)
-  - [Projections]()
+  - [Projections](https://github.com/manueldvr/MyDocuments/blob/master/spring/Proyecciones.md)
   - [¿Cómo optimizar Spring Boot con Java 21 para Escalado Extremo que debe resolver 1 million de servicios RESTfull por segundo?]()
 - **Persistencia**
     - [JPA]()
@@ -49,8 +49,6 @@ docs, tutorials, books
   - [basics](https://github.com/manueldvr/MyDocuments/blob/master/TDD/Tests_00.md)  
 - **Monitoreo**
     - [basics](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/Monitoreo.md)
-
-  - ****
-    - []()
+    - [Métricas con Spring Boot Actuator + Micrometer](https://github.com/manueldvr/MyDocuments/blob/master/spring/Metricas%20Actuator%20%20Micrometer.md)
   - ****
     - []()                   
