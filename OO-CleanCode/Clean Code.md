@@ -2,7 +2,15 @@
 # Clean Code
 
 
-Además del **Principio de Sustitución de Liskov (LSP)**, los otros principios **SOLID** que forman parte del marco de diseño de software orientado a objetos y que se alinean con los conceptos de *Clean Code* son los siguientes:
+### Contexto en Clean Code:
+
+Estos principios SOLID, propuestos por Robert C. Martin, son fundamentales en Clean Code porque promueven un diseño de software que es: - Mantenible: Fácil de modificar y extender. - Escalable: Permite añadir funcionalidades con menos esfuerzo. - Testeable: Facilita escribir pruebas unitarias al tener responsabilidades claras y dependencias bien gestionadas. - Comprensible: Reduce la complejidad y hace el código más legible.
+
+### Aplicación práctica:
+
+Al seguir los principios SOLID, evitas problemas comunes como clases monolíticas, acoplamiento excesivo o jerarquías de herencia mal diseñadas. Por ejemplo: - SRP te lleva a dividir una clase grande en varias más pequeñas y específicas. - OCP fomenta el uso de patrones como Strategy o Factory. - LSP asegura que las jerarquías de clases sean coherentes. - ISP evita interfaces infladas que complican el código. - DIP promueve la inyección de dependencias, una práctica común en frameworks modernos.
+
+En resumen, los principios SOLID trabajan juntos para crear un código limpio, modular y robusto, alineándose con el objetivo de Clean Code de producir software de alta calidad que sea fácil de entender y mantener. Si necesitas un ejemplo más detallado de alguno de estos principios.
 
 1. **Single Responsibility Principle (SRP) - Principio de Responsabilidad Única**  
    - **Definición**: Una clase debe tener una sola razón para cambiar, es decir, debe tener una única responsabilidad o propósito.  
@@ -26,27 +34,12 @@ Además del **Principio de Sustitución de Liskov (LSP)**, los otros principios 
    - **Definición**: Los módulos de alto nivel no deben depender de módulos de bajo nivel; ambos deben depender de abstracciones. Además, las abstracciones no deben depender de detalles, sino los detalles de las abstracciones.  
    - **Beneficio**: Flexibilidad para cambiar implementaciones sin modificar el código de alto nivel.
 
-### Contexto en *Clean Code*:
-Estos principios SOLID, propuestos por Robert C. Martin, son fundamentales en *Clean Code* porque promueven un diseño de software que es:
-- **Mantenible**: Fácil de modificar y extender.
-- **Escalable**: Permite añadir funcionalidades con menos esfuerzo.
-- **Testeable**: Facilita escribir pruebas unitarias al tener responsabilidades claras y dependencias bien gestionadas.
-- **Comprensible**: Reduce la complejidad y hace el código más legible.
 
-### Aplicación práctica:
-Al seguir los principios SOLID, evitas problemas comunes como clases monolíticas, acoplamiento excesivo o jerarquías de herencia mal diseñadas. Por ejemplo:
-- **SRP** te lleva a dividir una clase grande en varias más pequeñas y específicas.
-- **OCP** fomenta el uso de patrones como Strategy o Factory.
-- **LSP** asegura que las jerarquías de clases sean coherentes.
-- **ISP** evita interfaces infladas que complican el código.
-- **DIP** promueve la inyección de dependencias, una práctica común en frameworks modernos.
-
-En resumen, los principios SOLID trabajan juntos para crear un código limpio, modular y robusto, alineándose con el objetivo de *Clean Code* de producir software de alta calidad que sea fácil de entender y mantener. Si necesitas un ejemplo más detallado de alguno de estos principios, ¡pídeme!
-
-# LSP
+4. **LSP - Liskov Substitution Principle**  
 
 
-**Liskov Substitution Principle (LSP)**, o Principio de Sustitución de Liskov.  
+Principio de Sustitución de Liskov.  
+
 En el contexto de *Clean Code*, este principio se centra en garantizar que las clases derivadas (subclases) puedan sustituir a sus clases base (superclases) sin alterar el comportamiento correcto del programa.  
 En otras palabras, los objetos de una subclase deben poder reemplazar a los objetos de su clase base sin introducir errores o comportamientos inesperados.
 

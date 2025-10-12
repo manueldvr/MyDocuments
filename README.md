@@ -17,25 +17,26 @@ docs, tutorials, books
     - [Patrones: Singleton, Factory, Observer]()
     - [Template]()
     - [Strategy]()
-  - **Exceptions**
-    - [basics](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/exceptions.md)  
+	- **Exceptions**
+   		- [basics](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/exceptions.md)  
   - **Colections**
-    - [Colecciones](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Collections.md)  
+  		- [Colecciones](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Collections.md)  
   - **Lambda & Streams**
-    - [Lambda & Streams](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/LambdaStream.md)    
+  		- [Lambda & Streams](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/LambdaStream.md)    
   - **Concurrencia**
-    - [@Async, Future, Completable Future, y Executor Service API](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/concurrencia_1.md)
-    - [@Async vs @Transactional](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Async%20vs%20Transactional.md)
-    -[ Ultimate Java Concurrency & Multithreading Roadmap]()
-    - [Tutorial: Usando @Async en Spring Boot](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/concurrencia_Async.md)
+		- [@Async, Future, Completable Future, y Executor Service API](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/concurrencia_1.md)
+		- [@Async vs @Transactional](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Async%20vs%20Transactional.md)
+		-[Ultimate Java Concurrency & Multithreading Roadmap]()
+		- [Tutorial: Usando @Async en Spring Boot](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/concurrencia_Async.md)
 - **Clean Code**
     - [basics](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Clean%20Code.md)
+    - [OCP]()
 - **Spring**
   - [error-Injection](https://github.com/manueldvr/MyDocuments/blob/master/spring/error-injection.md)
   - [Overview](https://github.com/manueldvr/MyDocuments/blob/master/spring/Overview.md)
   - [Projections]()
   - [¿Cómo optimizar Spring Boot con Java 21 para Escalado Extremo que debe resolver 1 million de servicios RESTfull por segundo?]()
-  - **Persistencia**
+- **Persistencia**
     - [JPA]()
     - [JPA 1:N]()
     - [Multiple Data Sources @Query and @NativeQuery]()
@@ -44,7 +45,7 @@ docs, tutorials, books
     - [H2]()
     - [Transactions]()
 - **TDD**
-  - []()  
+  - [basics]()  
 - **Monitoreo**
     - [basics](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/Monitoreo.md)
 

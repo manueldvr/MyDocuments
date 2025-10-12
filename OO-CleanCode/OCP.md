@@ -9,6 +9,7 @@ A continuación, te doy un ejemplo práctico en Java que ilustra cómo aplicar e
 Imagina un sistema de comercio electrónico que calcula descuentos para diferentes tipos de clientes. Sin OCP, podrías tener una clase que usa condicionales para manejar diferentes tipos de descuentos, lo que requiere modificarla cada vez que añades un nuevo tipo. Con OCP, usaremos una interfaz para permitir extensiones sin modificar el código original.
 
 #### Código sin OCP (antipatrón)
+
 ```java
 class Descuento {
     public double aplicarDescuento(double precio, String tipoCliente) {
@@ -23,6 +24,7 @@ class Descuento {
     }
 }
 ```
+
 **Problema**: Cada vez que quieras añadir un nuevo tipo de cliente (por ejemplo, "Sénior"), necesitas modificar la clase `Descuento`, lo que viola el OCP y puede introducir errores.
 
 #### Código con OCP
@@ -92,6 +94,7 @@ public class Main {
 
 #### Cómo cumple con el OCP:
 1. **Abierto para extensión**: Si quieres añadir un nuevo tipo de descuento, por ejemplo, para clientes "Sénior", simplemente creas una nueva clase que implemente `EstrategiaDescuento`:
+
    ```java
    class DescuentoSenior implements EstrategiaDescuento {
        @Override
@@ -101,6 +104,7 @@ public class Main {
    }
    ```
    Luego, puedes usarla sin modificar ninguna clase existente:
+
    ```java
    CalculadoraDescuento calcSenior = new CalculadoraDescuento(new DescuentoSenior());
    System.out.println("Precio con descuento sénior: " + calcSenior.calcular(100)); // 75.0
@@ -218,26 +222,3 @@ classDiagram
 El diagrama refleja cómo el sistema está diseñado para ser **extensible** (puedes añadir nuevas clases como `DescuentoSenior` que implementen `EstrategiaDescuento`) sin modificar las clases existentes (`CalculadoraDescuento` o la interfaz). Esto alinea el diseño con los principios de *Clean Code* y OCP.
 
 Si necesitas ayuda para generar el diagrama en una herramienta específica, una captura visual (aunque no pueda generarla directamente), o quieres añadir más detalles (como un nuevo tipo de descuento), ¡avísame!
-
-
-
-
-
-<br>
-
-
-
-<br>
-
-
-
-
-
-<br>
-
-
-
-
-
-<br>
-
