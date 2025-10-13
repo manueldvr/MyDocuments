@@ -1,7 +1,6 @@
 # Resumen
 
 
-- 1 SOLID
 - 2 Patrones de Integración RESTful
 - 3 Control Avanzado de Errores
 - 4 @Async vs @Transactional
@@ -12,19 +11,11 @@
 
 
 
-# SOLID
-
-
-**SRP** (Single Responsibility Principle) Código más modular, menos acoplamiento y cambios más seguros.  
-**OCP** (Open/Closed Principle)  Clases abiertas para extensión, pero cerradas para modificación.  
-**ISP** (Interface Segregation Principle)  Clientes no deben verse obligados a depender de interfaces que no usan.  
-**DIP** (Dependency Inversion Principle) módulos de alto nivel no deben depender de módulos de bajo nivel; ambos deben depender de abstracciones. 
-     Además, las abstracciones no deben depender de detalles, sino los detalles de las abstracciones.   
-**LSP** (Principio de Sustitución de Liskov).  Si tienes una clase base `A` y una clase derivada `B` que hereda de `A`, cualquier código que use `A` debería funcionar correctamente si se le pasa una instancia de `B`, sin necesidad de modificar el código o hacer suposiciones específicas sobre `B`. Esto asegura que la herencia se utilice de manera coherente y que el diseño sea robusto y mantenible.  
 
 # ARQ
 
 **Características**
+ 
 - **Desacoplamiento**: Los componentes (microservicios, servicios, etc.) son independientes, cada uno con su propia lógica y base de datos (si aplica).
 - **Escalabilidad**: Permite escalar horizontalmente (agregar más instancias) o verticalmente (más recursos por nodo).
 - **Resiliencia**: Diseñados para manejar fallos parciales sin colapsar el sistema completo.
@@ -32,7 +23,9 @@
 
 #### **Ejemplo en Spring Boot**
 facilita la creación de MS para arquitecturas distribuidas por su capacidad para desarrollar aplicaciones modulares y livianas.
+
 - **Microservicios**: Cada servicio (ej. "Usuarios", "Pedidos") se implementa como una aplicación Spring Boot independiente con su propia base de datos.
+
 - **Spring Cloud**: Proporciona herramientas para gestionar configuraciones distribuidas (Spring Cloud Config), descubrimiento de servicios (Eureka), balanceo de carga (Ribbon), y tolerancia a fallos (Hystrix o Resilience4j).
 
 
@@ -48,38 +41,56 @@ especialmente en aplicaciones RESTful:
 
 ### **1. API Gateway**  
 Spring Cloud Gateway, Zuul, API Connect
+
 - **Descripción**: Un punto de entrada único para todas las solicitudes de los clientes, que enruta las peticiones a los servicios correspondientes y maneja preocupaciones transversales como autenticación, autorización, monitoreo, y limitación de tasas.
+
 - **Implementación en Spring Boot**: Usa **Spring Cloud Gateway** o **Zuul** para configurar un gateway que enrute solicitudes a microservicios según rutas definidas.
+
 > **Ejemplo**: Un cliente envía una solicitud a `/api/usuarios`, y el gateway la redirige al microservicio de usuarios. API CONNECT de IBM.
 
 ### **2. Client-Side Service Discovery**
+
 - **Descripción**: Los servicios descubren dinámicamente las ubicaciones (direcciones IP y puertos) de otros servicios en la red.
+
 - **Implementación en Spring Boot**: Usa **Eureka** (de Netflix) para registrar servicios y permitir que los clientes descubran instancias disponibles.
+
 > **Ejemplo**: Un microservicio de "Pedidos" consulta Eureka para encontrar la dirección del microservicio de "Productos".
 
 ### **3. Circuit Breaker**
+
 - **Descripción**: Protege el sistema contra fallos en cascada al interrumpir solicitudes a un servicio que no responde, evitando sobrecarga.
+
 - **Implementación en Spring Boot**: Usa **Resilience4j** o **Hystrix** para implementar este patrón. Por ejemplo, si un servicio falla repetidamente, el circuit breaker "abre" el circuito y retorna una respuesta predeterminada. O **Spring Retry** solución nativa.
+
 > **Ejemplo**: Si el servicio de "Pagos" está caído, el circuit breaker retorna un mensaje de error sin intentar contactarlo repetidamente.
 
 ### **4. Event-Driven Architecture (Arquitectura basada en eventos)**
+
 - **Descripción**: Los servicios se comunican mediante eventos asíncronos (ej. un pedido creado, un pago procesado) en lugar de llamadas directas.
+
 - **Implementación en Spring Boot**: Usa **Spring Cloud Stream** con colas de mensajería como **Kafka** o **RabbitMQ** para publicar y consumir eventos.
+
 > **Ejemplo**: Cuando se crea un pedido, se publica un evento "OrderCreated" que el servicio de notificaciones consume para enviar un correo.
 
 ### **5. Saga Pattern**
+
 - **Descripción**: Gestiona transacciones distribuidas dividiéndolas en pasos locales que cada servicio ejecuta, con compensaciones en caso de fallo (rollback).
+
 - **Implementación en Spring Boot**: Usa **Spring Boot** con un orquestador (centralizado) o coreografía (basada en eventos con Spring Cloud Stream).
 > **Ejemplo**: Para procesar un pedido, el servicio de inventario reserva productos, el servicio de pagos procesa el cobro, y si falla, se ejecutan acciones compensatorias (como liberar el inventario).
 
 #### **6. CQRS (Command Query Responsibility Segregation)**
 - **Descripción**: Separa las operaciones de escritura (commands) y lectura (queries) para optimizar el rendimiento y la escalabilidad.
 - **Implementación en Spring Boot**: Usa bases de datos separadas para lecturas (ej. una base NoSQL para consultas rápidas) y escrituras (ej. una base relacional para transacciones).
+
 > **Ejemplo**: Un servicio de productos usa una base MySQL para actualizaciones y Redis para consultas rápidas.
 
 ### **7. Backends for Frontends (BFF)**
+
 - **Descripción**: Crea APIs específicas para cada tipo de cliente (web, móvil, etc.) para optimizar la experiencia del usuario.
+
 - **Implementación en Spring Boot**: Implementa controladores REST específicos en Spring Boot para cada cliente.
+
 > **Ejemplo**: Una API para móviles devuelve datos optimizados (menos campos) comparada con la API para web.
 
 <br>
@@ -309,6 +320,7 @@ En Spring Boot, el `TaskExecutor` es una interfaz que proporciona una abstracci�
 ### 2. **Configuración de un `TaskExecutor`**
    - Para usar `@Async`, necesitas habilitar el soporte asíncrono con `@EnableAsync` y, opcionalmente, configurar un `TaskExecutor` personalizado para controlar el comportamiento de los hilos. Si no configuras uno, Spring usa `SimpleAsyncTaskExecutor`, que puede no ser adecuado para cargas pesadas.
    - Ejemplo de configuración de un `ThreadPoolTaskExecutor`:
+   
      ```java
      import org.springframework.context.annotation.Configuration;
      import org.springframework.scheduling.annotation.EnableAsync;
@@ -338,6 +350,7 @@ En Spring Boot, el `TaskExecutor` es una interfaz que proporciona una abstracci�
 
 ### 3. **Cuidados al usar `TaskExecutor` con `@Async` y `@Transactional`**
    - **Transacciones no se propagan entre hilos**: Como se mencionó en la respuesta anterior, las transacciones están ligadas al hilo actual. Cuando un método `@Async` se ejecuta en un hilo gestionado por el `TaskExecutor`, no hereda la transacción del hilo principal. Por eso, es crucial anotar los métodos asíncronos con `@Transactional` si necesitan acceder a recursos transaccionales (como una base de datos).
+   
      ```java
      @Async
      @Transactional
@@ -345,8 +358,11 @@ En Spring Boot, el `TaskExecutor` es una interfaz que proporciona una abstracci�
          // Operaciones con base de datos
      }
      ```
+
    - **Gestión de recursos del `TaskExecutor`**: Si el `TaskExecutor` no está bien configurado (por ejemplo, un `corePoolSize` o `queueCapacity` muy bajo), puede provocar cuellos de botella o excepciones como `TaskRejectedException` cuando la cola está llena y no se pueden crear más hilos.
+
    - **Solución**: Ajusta los parámetros del `ThreadPoolTaskExecutor` según las necesidades de tu aplicación. Por ejemplo, aumenta `queueCapacity` si esperas muchas tareas asíncronas, pero ten cuidado con el consumo de memoria.
+
 
 ### 4. **Manejo de excepciones**
    - Las excepciones en métodos ejecutados por un `TaskExecutor` no se propagan al hilo principal, lo que puede dificultar la detección de errores. Para manejar esto, puedes configurar un `AsyncUncaughtExceptionHandler`:
@@ -367,6 +383,7 @@ En Spring Boot, el `TaskExecutor` es una interfaz que proporciona una abstracci�
      - Necesitas controlar el número de hilos y la capacidad de la cola para evitar sobrecarga.
      - Quieres monitorear o personalizar el comportamiento de los hilos (por ejemplo, con nombres personalizados para los logs).
    - **Ejemplo de monitoreo**:
+
      ```java
      ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
      executor.setCorePoolSize(10);
@@ -378,6 +395,7 @@ En Spring Boot, el `TaskExecutor` es una interfaz que proporciona una abstracci�
 
 ### 6. **Integración con `@Transactional`**
    - **Transacciones independientes**: Si un método `@Async` necesita una transacción, usa `@Transactional` con una propagación adecuada (por ejemplo, `Propagation.REQUIRES_NEW`) para garantizar que se cree una nueva transacción en el hilo del `TaskExecutor`.
+ 
      ```java
      @Async
      @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -386,6 +404,7 @@ En Spring Boot, el `TaskExecutor` es una interfaz que proporciona una abstracci�
      }
      ```
    - **Sincronización con transacciones principales**: Si el método asíncrono debe completarse antes de que una transacción principal se confirme, usa `CompletableFuture` o un mecanismo similar para esperar su finalización:
+   
      ```java
      @Async
      public CompletableFuture<Void> asyncMethod() {
@@ -409,6 +428,7 @@ En Spring Boot, el `TaskExecutor` es una interfaz que proporciona una abstracci�
 ### 8. **Monitoreo y depuración**
    - Usa el prefijo de los hilos (`threadNamePrefix`) para identificar fácilmente las tareas asíncronas en logs o herramientas de monitoreo.
    - Habilita métricas (por ejemplo, con Spring Actuator) para supervisar el estado del `TaskExecutor`, como el número de hilos activos o tareas en cola:
+
      ```java
      @Bean
      public ThreadPoolTaskExecutor taskExecutor() {
@@ -430,7 +450,3 @@ En Spring Boot, el `TaskExecutor` es una interfaz que proporciona una abstracci�
 - Usa herramientas como `CompletableFuture` para coordinar métodos asíncronos con transacciones principales.
 - Monitorea el rendimiento del `TaskExecutor` para evitar cuellos de botella o consumo excesivo de recursos.
 
-
-
-
-Si necesitas un ejemplo más específico, como configurar un `TaskExecutor` para un caso particular o resolver un problema concreto, proporciónalo y lo desarrollaré en detalle.
