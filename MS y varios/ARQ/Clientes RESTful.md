@@ -3,24 +3,26 @@
 
 
 
+<br>
 
 
+Hoy en día lo recomendado es usar **`RestClient`** o **`WebClient`** (reactivo).
+
+<br>
 
 
-¡Excelente pregunta! Vamos a ver **cómo consumir servicios RESTful en Java 21 + Spring Boot moderno (3.x / Spring 6)**.
-Hoy en día lo recomendado es usar **`RestClient`** o **`WebClient`** (reactivo), según tus necesidades.
-
----
-
-## 🔥 Opciones modernas
+## Opciones:
 
 | Cliente          | Estilo              | Cuándo usarlo                                                        |
 | ---------------- | ------------------- | -------------------------------------------------------------------- |
 | **RestClient**   | Sincrónico, simple  | Llamadas HTTP clásicas, fácil migración desde `RestTemplate`.        |
-| **WebClient**    | Reactivo, asíncrono | Escenarios con alta concurrencia o donde usas programación reactiva. |
+| **WebClient**    | Asíncrono, Reactivo | Escenarios con alta concurrencia o donde usas programación reactiva. |
 | **RestTemplate** | Legado              | Evitar en nuevos proyectos; solo para compatibilidad.                |
 
----
+
+
+<br>
+<br>
 
 ## ✅ Ejemplo con **RestClient** (Recomendado)
 
@@ -40,6 +42,7 @@ import org.springframework.web.client.RestClient;
 
 @Configuration
 public class RestClientConfig {
+
     @Bean
     public RestClient restClient() {
         return RestClient.builder().baseUrl("https://api.example.com").build();
@@ -47,7 +50,8 @@ public class RestClientConfig {
 }
 ```
 
----
+
+
 
 ### 3. Consumir un API REST
 
@@ -73,11 +77,17 @@ public class ApiService {
 }
 ```
 
+
+<br>
+
 ---
+
+<br>
+<br>
 
 ## ✅ Ejemplo con **WebClient** (para programación reactiva)
 
-Si tu app necesita **escala, no bloqueo, y reactividad**, WebClient es mejor.
+Si tu app necesita **escala, no bloqueo, y reactividad**, `WebClient` es mejor.
 
 ### Configuración
 
@@ -122,9 +132,14 @@ public class ApiReactiveService {
 }
 ```
 
----
+<br>
+<br>
+<br>
+<br>
 
-## 🔐 Manejo de Errores
+## Manejo de Errores
+
+<br>
 
 Con `RestClient`:
 
@@ -139,29 +154,31 @@ String response = restClient.get()
     .body(String.class);
 ```
 
----
+<br>
+<br>
 
-## 🧠 Recomendación práctica
+
+## Recomendación práctica
 
 * Si tu arquitectura **no es reactiva** → usa **RestClient** (más simple).
 * Si usas **Spring WebFlux y Reactor** → usa **WebClient**.
 * Evitá `RestTemplate` en nuevos desarrollos (está en mantenimiento).
 
----
+
+<br>
+<br>
+<br>
+
+<br>
 
 
 
+# WebClient
+
+<br>
 
 
-podrias profundizar más WebClient? cuál es el contexto de uso?
-
-
-
-¡Excelente! Vamos a **profundizar en `WebClient`** y cuándo conviene usarlo en aplicaciones Java 21 con Spring Boot.
-
----
-
-## 🔥 ¿Qué es WebClient?
+## ¿Qué es WebClient?
 
 `WebClient` es un **cliente HTTP reactivo y no bloqueante** que forma parte de **Spring WebFlux**.
 Es el reemplazo moderno de `RestTemplate` en entornos que requieren:
@@ -171,9 +188,10 @@ Es el reemplazo moderno de `RestTemplate` en entornos que requieren:
 * **Bajo consumo de recursos**
 * Integración con **programación reactiva** (Reactor, Mono, Flux)
 
+
 > En vez de usar hilos bloqueados esperando una respuesta (como `RestTemplate`), `WebClient` trabaja con **reactive streams** (Mono y Flux) y aprovecha mejor el hardware.
 
----
+
 
 ## 🧩 Contexto de uso
 
@@ -186,7 +204,12 @@ Es el reemplazo moderno de `RestTemplate` en entornos que requieren:
 | Gateway / Backend For Frontend (BFF)        | Ideal cuando un servicio agrega datos de muchos otros endpoints externos.                                |
 | Apps con **alto tráfico**                   | Reduce el uso de threads y memoria, ideal para aplicaciones que procesan muchas conexiones concurrentes. |
 
----
+
+
+
+<br>
+<br>
+
 
 ## 🔍 Diferencias con RestClient/RestTemplate
 
@@ -198,7 +221,10 @@ Es el reemplazo moderno de `RestTemplate` en entornos que requieren:
 | Complejidad           | Baja                    | Baja                           | Media (requiere Reactor) |
 | Rendimiento en escala | Medio                   | Medio                          | Alto                     |
 
----
+
+
+<br>
+<br>
 
 ## ⚙️ Configuración básica de WebClient
 
@@ -309,6 +335,10 @@ public Mono<String> getDataWithRetry() {
 
 ---
 
+
+<br>
+<br>
+
 ## 🚀 Ventajas de WebClient
 
 1. **No bloqueante** → Mejor uso de hilos, escalabilidad en microservicios.
@@ -331,13 +361,15 @@ public Mono<String> getDataWithRetry() {
 
 
 
-por qué en la complejidad de WebClient es media y requiere Reactor?
+### Por qué en la complejidad de WebClient es media y requiere Reactor?
 
 
 ¡Excelente observación! 🔍
 Te explico **por qué puse que WebClient tiene una complejidad “media” y depende de Reactor**:
 
----
+
+<br>
+<br>
 
 ### 🔑 1. Porque **WebClient es totalmente reactivo**
 
@@ -347,6 +379,7 @@ Te explico **por qué puse que WebClient tiene una complejidad “media” y dep
 
   * `Mono<T>` = 0 o 1 resultado asíncrono.
   * `Flux<T>` = 0, 1 o muchos resultados (stream).
+
 * Para trabajar con esos tipos, usás **operadores** (map, flatMap, filter, etc.) y pipelines, en vez de lógica secuencial.
 
 Ejemplo:
@@ -379,7 +412,7 @@ Ese patrón reactivo **no es inmediato para programadores acostumbrados a códig
 
 ### 🔑 3. Porque cambia la forma de pensar
 
-Con `RestClient` o `RestTemplate`, escribís:
+Con `RestClient`  escribís:
 
 ```java
 String result = restClient.get()
@@ -428,15 +461,12 @@ Para casos simples o donde no usás reactividad, **RestClient es más directo** 
 
 
 
----
+<br>
+<br>
 
 ¿Querés que te haga un **mapa mental de Mono y Flux** para que veas rápido cómo se usan?
 
 
-
-
-
-¡Perfecto! 📚
 Te armo un **Mapa Mental de `Mono` y `Flux` (Project Reactor)** para entender WebClient:
 
 ---
@@ -488,7 +518,8 @@ Ideal para respuestas únicas               Ideal para streams:
 
 ```
 
----
+
+
 
 🔍 **Interpretación rápida:**
 
@@ -505,8 +536,13 @@ Spring lo hace por vos y serializa el `Mono` o `Flux` como respuesta HTTP.
 
 ---
 
-¿Querés que ahora te haga **un ejemplo comparativo** entre cómo consumir una API con `Mono` (simple) y `Flux` (stream)?  
-si por favor , en el caso Mono que sea un DTO ?
+
+
+
+<br>
+<br>
+<br>
+<br>
 
 
 
@@ -516,9 +552,16 @@ si por favor , en el caso Mono que sea un DTO ?
 
 
 
-¡Perfecto! Vamos a hacer **un ejemplo comparativo** para que veas `Mono` (con DTO) y `Flux` (con lista/stream) usando **WebClient** en Spring Boot 3.x + Java 21.
+# Ejemplo
 
----
+
+**ejemplo comparativo** entre cómo consumir una API con `Mono` (simple) y `Flux` (stream)?  
+y en el caso Mono que sea un DTO ?
+
+
+ver `Mono` (con DTO) y `Flux` (con lista/stream) usando **WebClient** en Spring Boot 3.x + Java 21.
+
+
 
 ## 🔹 1. Definimos el DTO (para el caso `Mono`)
 
@@ -532,17 +575,11 @@ public class UserDTO {
 
     // Getters y setters
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    ...
 }
 ```
 
----
+
 
 ## 🔹 2. Configuración de `WebClient`
 
@@ -565,9 +602,9 @@ public class WebClientConfig {
 }
 ```
 
----
 
-## 🔹 3. Servicio: Ejemplo Mono (DTO) y Flux (lista)
+
+## 3. Servicio: Ejemplo Mono (DTO) y Flux (lista)
 
 ```java
 package com.example.demo.service;
@@ -605,9 +642,9 @@ public class ExternalApiService {
 }
 ```
 
----
 
-## 🔹 4. Controlador para exponer endpoints
+
+## 4. Controlador para exponer endpoints
 
 ```java
 package com.example.demo.controller;
@@ -642,9 +679,10 @@ public class UserController {
 }
 ```
 
----
 
-## 🔍 Cómo funciona
+
+
+## Cómo funciona
 
 | Endpoint           | Retorno         | Descripción                                  |
 | ------------------ | --------------- | -------------------------------------------- |
@@ -674,7 +712,7 @@ public class UserController {
 ]
 ```
 
----
+<br>
 
 🔍 **Notas importantes**:
 
@@ -968,28 +1006,33 @@ public Mono<UserDTO> getUserById(Long id) {
 `doOnError` se usa para **actuar cuando hay error** (logging, métricas, alertas) sin cambiar el resultado del flujo.
 Si querés **recuperarte del error**, combinás `doOnError` con `onErrorResume`, `onErrorReturn` o `retryWhen`.
 
+
+
+
+
+
+
+
+<br>
+<br>
+<br>
+<br>
+
+
+
+
 ---
 
-¿Querés que te haga un **diagrama visual** de cómo fluyen `doOnError`, `onErrorResume` y `retryWhen` en una llamada con `WebClient`?
+
+<br>
+<br>
+
+
+#### ¿Querés que te haga un **diagrama visual** de cómo fluyen `doOnError`, `onErrorResume` y `retryWhen` en una llamada con `WebClient`?
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-¡Perfecto! Te armo un **diagrama visual** para entender cómo se encadenan `doOnError`, `onErrorResume` y `retryWhen` en un flujo reactivo con `WebClient`.
+**diagrama visual** para entender cómo se encadenan `doOnError`, `onErrorResume` y `retryWhen` en un flujo reactivo con `WebClient`.
 
 ---
 
@@ -1112,6 +1155,3 @@ public Mono<UserDTO> getUserById(Long id) {
 * `retryWhen` intenta 3 veces.
 * Si sigue fallando, `onErrorResume` devuelve un **usuario de fallback**.
 
----
-
-¿Querés que ahora te haga un **mapa mental resumido** de los operadores de error (`doOnError`, `onErrorResume`, `onErrorReturn`, `retryWhen`) para tenerlo de referencia rápida?
