@@ -582,7 +582,7 @@ resilience4j.retry:
 
 **ErrorDecoder Personalizado**:
 
-```x-java-source
+```java
 package com.example.demo.config;
 
 import feign.Response;
@@ -657,7 +657,7 @@ class RetryableException extends RuntimeException {
 
 **Configuración de Feign para Usar el ErrorDecoder**:
 
-```x-java-source
+```java
 package com.example.demo.config;
 
 import feign.codec.ErrorDecoder;
@@ -676,7 +676,7 @@ public class FeignConfig {
 
 **Feign Client (sin cambios)**:
 
-```x-java-source
+```java
 package com.example.demo.client;
 
 import io.github.resilience4j.retry.annotation.Retry;
@@ -714,7 +714,7 @@ Las pruebas unitarias simulan el comportamiento del cliente Feign usando **Mocki
 
 **Ejemplo de Prueba Unitaria**:
 
-```x-java-source
+```java
 package com.example.demo.client;
 
 import feign.FeignException;
@@ -790,7 +790,7 @@ Asegúrate de que WireMock esté corriendo (puedes iniciarlo como un servidor st
 
 **Ejemplo de Prueba de Integración**:
 
-```x-java-source
+```java
 package com.example.demo.client;
 
 import com.example.demo.DemoApplication;
@@ -901,11 +901,13 @@ token.api.url: http://localhost:8089
 ---
 
 ### Conclusión
+
 - **Manejo de Errores Avanzado**: El `CustomErrorDecoder` procesa códigos de estado HTTP y excepciones de red, lanzando excepciones específicas para facilitar el manejo en la aplicación. Los errores 5xx desencadenan reintentos automáticos vía `Resilience4j`.
 - **Pruebas Unitarias**: Usan **Mockito** para simular el comportamiento del cliente Feign, probando casos de éxito y fallo sin realizar llamadas reales.
 - **Pruebas de Integración**: Usan **WireMock** para simular la API de Santander, probando la integración completa del cliente Feign, incluyendo reintentos y manejo de errores.
 
 **Notas**:
+
 - Ajusta el cuerpo de la solicitud (`credentials`) y el formato de la respuesta según la documentación de la API.
 - Si la API requiere encabezados adicionales (por ejemplo, `Authorization`), agrégalos en la interfaz Feign con `@RequestHeader`.
 - Para pruebas de integración más realistas, considera usar un entorno de staging o un token de prueba proporcionado por Santander.
