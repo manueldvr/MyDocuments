@@ -35,7 +35,9 @@ docs, tutorials, books
   - [error-Injection](https://github.com/manueldvr/MyDocuments/blob/master/spring/error-injection.md)
   - [Overview](https://github.com/manueldvr/MyDocuments/blob/master/spring/Overview.md)
   - [Projections](https://github.com/manueldvr/MyDocuments/blob/master/spring/Proyecciones.md)
-  - [¿Cómo optimizar Spring Boot con Java 21 para Escalado Extremo que debe resolver 1 million de servicios RESTfull por segundo?]()
+  - [¿Cómo optimizar Spring Boot con Java 21 para Escalado Extremo que debe resolver 1 million de servicios RESTfull por segundo?]() 
+	- **RESTful**.  
+		- [Clientes RESTful]()
 - **Persistencia**
     - [JPA]()
     - [JPA 1:N](https://github.com/manueldvr/MyDocuments/blob/master/Persistance/JPA.md)

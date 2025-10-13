@@ -167,6 +167,74 @@ String response = restClient.get()
 
 <br>
 <br>
+
+
+
+
+## Servicio con Retry + Fallback + Logging
+
+```java
+package com.example.demo.service;
+
+import com.example.demo.dto.UserDTO;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
+
+import java.time.Duration;
+
+@Service
+public class ExternalApiService {
+
+    private final WebClient webClient;
+
+    public ExternalApiService(WebClient webClient) {
+        this.webClient = webClient;
+    }
+
+    public Mono<UserDTO> getUserById(Long id) {
+        return webClient.get()
+                .uri("/users/{id}", id)
+                .retrieve()
+                .bodyToMono(UserDTO.class)
+                // Logging de error
+                .doOnError(err -> System.err.println("❌ Error obteniendo usuario " + id + ": " + err.getMessage()))
+                // Reintentos con backoff exponencial (3 intentos)
+                .retryWhen(Retry.backoff(3, Duration.ofSeconds(2)))
+                // Fallback en caso de que todos los reintentos fallen
+                .onErrorResume(err -> {
+                    System.out.println("⚠️ Usando fallback para el usuario " + id);
+                    UserDTO fallback = new UserDTO();
+                    fallback.setId(id);
+                    fallback.setName("Usuario Desconocido");
+                    fallback.setEmail("unknown@example.com");
+                    return Mono.just(fallback);
+                })
+                // Logging de éxito
+                .doOnSuccess(user -> System.out.println("✅ Usuario obtenido: " + user.getName()));
+    }
+}
+```
+
+1. El cliente hace `GET /api/users/{id}`.
+2. `WebClient` intenta obtener el usuario del servicio externo.
+3. Si hay error → `doOnError` loguea el problema.
+4. Se aplican hasta **3 reintentos** con `retryWhen`.
+5. Si aún falla → `onErrorResume` devuelve un **usuario de fallback**.
+6. `doOnSuccess` loguea que se obtuvo un resultado (real o fallback).
+7. El cliente siempre recibe un `Mono<UserDTO>` JSON.
+
+
+
+
+
+
+
+
+
+<br>
+<br>
 <br>
 
 <br>
@@ -1154,4 +1222,375 @@ public Mono<UserDTO> getUserById(Long id) {
 * `doOnError` **siempre loguea**.
 * `retryWhen` intenta 3 veces.
 * Si sigue fallando, `onErrorResume` devuelve un **usuario de fallback**.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+<br>
+
+
+
+<br>
+<br>
+<br>
+
+
+<br>
+
+
+
+## Versión aún más avanzada
+
+<br>
+
+
+Si querés, puedo hacer una **versión aún más avanzada** integrando 
+**circuit breaker + cache con TTL + métricas con Micrometer** para 
+que sea casi lista para producción.
+
+
+Esto es un **patrón muy usado en microservicios reactivos**: resiliencia + rendimiento + monitoreo.
+
+
+
+<br>
+
+
+* **WebClient reactivo**
+* **Fallback**
+* **Cache con TTL (time-to-live)**
+* **Circuit Breaker** con Resilience4j
+* **Retry automático con backoff**
+* **Logging estructurado**
+* **Métricas con Micrometer / Spring Boot Actuator**
+
+---
+
+## 🔹 1. Dependencias Maven necesarias
+
+```xml
+<dependencies>
+    <!-- Spring WebFlux -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-webflux</artifactId>
+    </dependency>
+
+    <!-- Resilience4j for Circuit Breaker -->
+    <dependency>
+        <groupId>io.github.resilience4j</groupId>
+        <artifactId>resilience4j-spring-boot3</artifactId>
+        <version>2.0.2</version>
+    </dependency>
+
+    <!-- Caffeine Cache -->
+    <dependency>
+        <groupId>com.github.ben-manes.caffeine</groupId>
+        <artifactId>caffeine</artifactId>
+        <version>3.1.8</version>
+    </dependency>
+
+    <!-- Spring Boot Actuator + Micrometer -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+</dependencies>
+```
+
+
+## 🔹 2. Configuración de WebClient y Cache
+
+```java
+package com.example.demo.config;
+
+import com.github.benmanes.caffeine.cache.Caffeine;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.concurrent.TimeUnit;
+
+@Configuration
+public class AppConfig {
+
+    @Bean
+    public WebClient webClient() {
+        return WebClient.builder()
+                .baseUrl("https://jsonplaceholder.typicode.com")
+                .build();
+    }
+
+    @Bean
+    public com.github.benmanes.caffeine.cache.Cache<Long, Object> userCache() {
+        return Caffeine.newBuilder()
+                .expireAfterWrite(10, TimeUnit.MINUTES) // TTL 10 minutos
+                .maximumSize(1000)
+                .build();
+    }
+}
+```
+
+---
+
+## 🔹 3. Servicio con Circuit Breaker, Retry y Fallback
+
+```java
+package com.example.demo.service;
+
+import com.example.demo.dto.UserDTO;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
+
+import com.github.benmanes.caffeine.cache.Cache;
+
+import java.time.Duration;
+
+@Service
+public class ExternalApiService {
+
+    private final WebClient webClient;
+    private final Cache<Long, UserDTO> userCache;
+
+    public ExternalApiService(WebClient webClient, Cache<Long, UserDTO> userCache) {
+        this.webClient = webClient;
+        this.userCache = userCache;
+    }
+
+    @CircuitBreaker(name = "userServiceCircuit", fallbackMethod = "fallbackUser")
+    public Mono<UserDTO> getUserById(Long id) {
+        // Retornamos cache si existe
+        UserDTO cached = userCache.getIfPresent(id);
+        if (cached != null) {
+            return Mono.just(cached);
+        }
+
+        return webClient.get()
+                .uri("/users/{id}", id)
+                .retrieve()
+                .bodyToMono(UserDTO.class)
+                .doOnError(err -> System.err.println("❌ Error obteniendo usuario " + id + ": " + err.getMessage()))
+                .retryWhen(Retry.backoff(3, Duration.ofSeconds(2)))
+                .doOnSuccess(user -> {
+                    if (user != null) {
+                        userCache.put(id, user); // Guardamos en cache
+                        System.out.println("✅ Usuario cacheado: " + user.getName());
+                    }
+                });
+    }
+
+    // Método fallback para circuit breaker
+    public Mono<UserDTO> fallbackUser(Long id, Throwable t) {
+        System.out.println("⚠️ Fallback activado para usuario " + id + ": " + t.getMessage());
+        UserDTO fallback = new UserDTO();
+        fallback.setId(id);
+        fallback.setName("Usuario Desconocido");
+        fallback.setEmail("unknown@example.com");
+        return Mono.just(fallback);
+    }
+}
+```
+
+---
+
+## 🔹 4. Controlador reactivo
+
+```java
+package com.example.demo.controller;
+
+import com.example.demo.dto.UserDTO;
+import com.example.demo.service.ExternalApiService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
+
+@RestController
+public class UserController {
+
+    private final ExternalApiService apiService;
+
+    public UserController(ExternalApiService apiService) {
+        this.apiService = apiService;
+    }
+
+    @GetMapping("/api/users/{id}")
+    public Mono<UserDTO> getUser(@PathVariable Long id) {
+        return apiService.getUserById(id);
+    }
+}
+```
+
+
+
+
+## 🔹 5. Qué logramos con esta arquitectura
+
+| Componente                         | Función                                                               |
+| ---------------------------------- | --------------------------------------------------------------------- |
+| **WebClient**                      | Consumir API externa de forma reactiva.                               |
+| **Cache Caffeine**                 | Guardar datos temporalmente (TTL) para reducir llamadas externas.     |
+| **Circuit Breaker (Resilience4j)** | Detecta fallos frecuentes y corta llamadas para proteger el servicio. |
+| **Retry**                          | Reintenta fallos transitorios automáticamente.                        |
+| **Fallback**                       | Devuelve un valor alternativo si la API sigue fallando.               |
+| **Logging estructurado**           | Monitoriza errores y éxitos.                                          |
+| **Micrometer / Actuator**          | Métricas y monitorización de uso y resiliencia.                       |
+
+---
+
+### 🔹 6. Flujo completo
+
+1. Cliente solicita `/api/users/{id}`
+2. Se revisa **cache** → si existe, retorna directamente
+3. Llamada a WebClient → si falla:
+
+   * Reintentos automáticos (`retryWhen`)
+   * Circuit Breaker corta solicitudes repetidas
+   * Si persiste el fallo → `fallbackUser` devuelve valor de respaldo
+4. Éxito → respuesta cacheada y enviada al cliente
+5. Métricas y logs quedan disponibles vía **Actuator**
+
+
+
+
+
+
+
+
+
+
+### 🔹 Escenario
+
+El microservicio obtiene información completa de un usuario desde **3 APIs externas**:
+
+1. `/users/{id}` → datos básicos (nombre, email)
+2. `/user-profile/{id}` → perfil extendido (edad, país, rol)
+3. `/user-history/{id}` → historial de actividad
+
+El objetivo:
+
+* Integrar los datos en un solo DTO (`UserDTO`)
+* Aplicar **retry** y **circuit breaker** a cada llamada
+* Usar **fallback** si alguna API falla
+* Cachear el resultado final
+* Flujo totalmente **reactivo**
+
+---
+
+### 🔹 Diagrama extendido: múltiples APIs + fallback + cache
+
+```
+          ┌─────────────────────────────┐
+          │       Cliente / Frontend     │
+          └─────────────┬──────────────┘
+                        │
+                        ▼
+          ┌─────────────────────────────┐
+          │   Servicio Spring Boot API   │
+          │  (WebFlux + ExternalApiSvc) │
+          └─────────────┬──────────────┘
+                        │
+          ┌─────────────┴───────────────┐
+          │                              │
+          ▼                              ▼
+ ┌─────────────────┐              ┌─────────────────────────┐
+ │ Cache (Caffeine)│              │ Llamadas WebClient      │
+ │ TTL 10 min      │              │ a APIs externas         │
+ └───────┬─────────┘              └─────────┬───────────────┘
+         │ Cache hit?                      │
+         │ Yes                             │ No
+         ▼                                 ▼
+   ┌───────────────┐             ┌───────────────────────────┐
+   │ Retorna valor │             │ Mono.zip / Flux.merge     │
+   │ cacheado      │             │ Combina:                  │
+   └───────────────┘             │ 1. Basic info             │
+                                 │ 2. Profile info           │
+                                 │ 3. History info           │
+                                 └─────────┬─────────────────┘
+                                           │
+                                ┌──────────▼────────────┐
+                                │ RetryWhen + Backoff    │
+                                │ (cada API)             │
+                                └──────────┬────────────┘
+                                           │
+                                ┌──────────▼────────────┐
+                                │ Circuit Breaker        │
+                                │ (Resilience4j)         │
+                                └──────────┬────────────┘
+                                           │
+                                ┌──────────▼────────────┐
+                                │ Fallbacks              │
+                                │ (valor por defecto /   │
+                                │ cache previo)          │
+                                └──────────┬────────────┘
+                                           │
+                                ┌──────────▼────────────┐
+                                │ Combinar datos finales │
+                                │ UserDTO completo       │
+                                └──────────┬────────────┘
+                                           │
+                                ┌──────────▼────────────┐
+                                │ Guardar en Cache       │
+                                │ TTL 10 min             │
+                                └──────────┬────────────┘
+                                           │
+                                ┌──────────▼────────────┐
+                                │ Retornar al Cliente    │
+                                │ (Mono<UserDTO>)        │
+                                └───────────────────────┘
+```
+
+---
+
+### 🔹 Flujo explicado
+
+1. **Cache**: si el usuario ya fue consultado, retornamos inmediatamente.
+2. **WebClient** llama a las 3 APIs externas de forma paralela usando `Mono.zip` o `Flux.merge`.
+3. Cada API tiene:
+
+   * `retryWhen` → reintentos automáticos
+   * `CircuitBreaker` → corta llamadas si la API falla repetidamente
+   * `Fallback` → valor por defecto o datos cacheados
+4. Los resultados de todas las APIs se combinan en un **`UserDTO` completo**.
+5. Se guarda el resultado combinado en cache para futuras consultas.
+6. Se retorna un **Mono reactivo** al cliente, garantizando respuesta incluso si alguna API falla.
+
+---
+
+### 🔹 Beneficios de esta arquitectura
+
+* ✅ Integración de múltiples fuentes de datos
+* ✅ Resiliencia completa ante fallos externos
+* ✅ Cache reduce latencia y carga en APIs externas
+* ✅ Reintentos automáticos y circuit breaker evitan saturación
+* ✅ Fallback garantiza respuesta siempre
+* ✅ Flujo totalmente reactivo, sin bloquear hilos
+* ✅ Métricas y logging claros para monitorización
+
 
