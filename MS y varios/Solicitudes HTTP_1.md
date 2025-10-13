@@ -92,6 +92,7 @@ public class HttpClientExample {
 - Proyectos que requieren balanceo de carga o descubrimiento de servicios.
 
 **Dependencias en `pom.xml`**:
+
 ```xml
 <dependency>
     <groupId>org.springframework.cloud</groupId>
@@ -101,6 +102,7 @@ public class HttpClientExample {
 ```
 
 **Ejemplo**:
+
 ```java
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -224,6 +226,7 @@ A continuación, te proporciono ejemplos de implementación para consumir la URL
 **Descripción**: Usaremos `RestClient` con un mecanismo de reintentos configurado mediante un interceptor personalizado o una biblioteca como `Resilience4j`. En este caso, optaré por `Resilience4j` para manejar los reintentos de forma declarativa, ya que es una solución robusta y ampliamente utilizada en Spring Boot.
 
 **Dependencias en `pom.xml`**:
+
 ```xml
 <dependency>
     <groupId>org.springframework.boot</groupId>
@@ -243,6 +246,7 @@ A continuación, te proporciono ejemplos de implementación para consumir la URL
 ```
 
 **Configuración de Resilience4j** (en `application.yml`):
+
 ```yaml
 resilience4j.retry:
   instances:
@@ -255,6 +259,7 @@ resilience4j.retry:
 ```
 
 **Ejemplo de Código**:
+
 ```x-java-source
 package com.example.demo.service;
 
@@ -287,6 +292,7 @@ public class TokenServiceRestClient {
 ```
 
 **Uso del Servicio**:
+
 ```java
 package com.example.demo;
 
@@ -330,16 +336,14 @@ public class DemoApplication implements CommandLineRunner {
 - Requiere configurar `Resilience4j` para reintentos avanzados.
 - Síncrono, no ideal para alta concurrencia.
 
-.  
-.  
-
----
-.  
+<br>
+ 
 
 ## 2. Feign Client con Reintentos
 **Descripción**: Usaremos **OpenFeign** con Spring Cloud para definir un cliente declarativo. Para los reintentos, configuraremos un `Retryer` personalizado en Feign. También usaremos `Resilience4j` para una integración más limpia con Spring Boot, aunque Feign tiene su propio mecanismo de reintentos.
 
 **Dependencias en `pom.xml`**:
+
 ```xml
 <dependency>
     <groupId>org.springframework.cloud</groupId>
@@ -359,6 +363,7 @@ public class DemoApplication implements CommandLineRunner {
 ```
 
 **Configuración de Resilience4j** (en `application.yml`):
+
 ```yaml
 resilience4j.retry:
   instances:
@@ -371,6 +376,7 @@ resilience4j.retry:
 ```
 
 **Ejemplo de Código**:
+
 ```x-java-source
 package com.example.demo.client;
 
@@ -513,6 +519,7 @@ El contexto sigue siendo la llamada a la URL `https://corresponsalias.santander.
 Para manejar errores avanzados, implementaremos un `ErrorDecoder` personalizado que procese diferentes códigos de estado HTTP y excepciones de red, lanzando excepciones específicas según el caso. También registraremos los errores para facilitar la depuración.
 
 **Dependencias en `pom.xml`** (igual que antes, con adiciones para pruebas):
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
