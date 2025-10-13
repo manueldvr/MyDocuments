@@ -1,216 +1,9 @@
-# Solicitudes HTTP
-
-## En el contexto de Java 21 y Spring Boot, qué opciones hay además de RestTemplate, qué características tienen y para qué circunstancias se usan? con ejemplos y librerías y dependencias en el pom necesarias. incluye a Testtemplate en la respuesta
+# 4. Java HttpClient (JDK)
 
 
-En el contexto de **Java 21** y **Spring Boot**, `RestTemplate` ha sido durante mucho tiempo una herramienta popular para realizar solicitudes HTTP, pero está marcado como obsoleto en versiones recientes de Spring (a partir de Spring 6). Existen varias alternativas modernas que ofrecen mejor rendimiento, flexibilidad y soporte para escenarios síncronos, asíncronos y reactivos. A continuación, detallo las principales alternativas a `RestTemplate`, incluyendo `TestRestTemplate`, sus características, casos de uso, ejemplos, y las dependencias necesarias en el `pom.xml`.
 
----
-
-### 1. RestClient
-**Descripción**: Introducido en **Spring Framework 6.1**, `RestClient` es un cliente HTTP síncrono moderno con una API fluida y más intuitiva que `RestTemplate`. Está diseñado para reemplazar a `RestTemplate` en aplicaciones síncronas, compartiendo la misma infraestructura (como convertidores de mensajes y fábricas de solicitudes).
-
-**Características**:
-- API fluida y moderna, similar a la de `WebClient`.
-- Soporte para todas las operaciones HTTP (GET, POST, PUT, DELETE, etc.).
-- Configuración flexible para encabezados, interceptores y convertidores de mensajes.
-- Compatible con clientes HTTP subyacentes como Apache HttpClient, Jetty, o JDK `HttpClient`.
-- Mejor integración con Spring Boot y menos código repetitivo.
-
-**Casos de uso**:
-- Aplicaciones que requieren comunicación HTTP síncrona con APIs externas.
-- Reemplazo directo de `RestTemplate` en proyectos nuevos o modernizados.
-- Escenarios donde se necesita una API más legible y menos propensa a errores.
-
-**Dependencias en `pom.xml`**:
-```xml
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-web</artifactId>
-    <version>3.3.3</version>
-</dependency>
-```
-
-**Ejemplo**:
-```java
-import org.springframework.web.client.RestClient;
-import org.springframework.http.MediaType;
-
-public class RestClientExample {
-    public static void main(String[] args) {
-        RestClient restClient = RestClient.create();
-
-        // GET request
-        String result = restClient.get()
-                .uri("https://api.example.com/users")
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .body(String.class);
-
-        System.out.println(result);
-
-        // POST request
-        String newUser = "{\"name\": \"John Doe\", \"email\": \"john@example.com\"}";
-        String response = restClient.post()
-                .uri("https://api.example.com/users")
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(newUser)
-                .retrieve()
-                .body(String.class);
-
-        System.out.println(response);
-    }
-}
-```
-
-**Ventajas**:
-- API más clara y menos verbosa.
-- Soporte nativo para Java 21 y Spring Boot 3.x.
-- Mejor manejo de errores y configuraciones avanzadas.
-
-**Limitaciones**:
-- Solo para operaciones síncronas (para asíncronas, usar `WebClient`).
-- Menos maduro que `RestTemplate`, pero está ganando soporte rápidamente.
-
----
-
-### 2. WebClient
-**Descripción**: Introducido en **Spring 5**, `WebClient` es un cliente HTTP no bloqueante y reactivo, parte del módulo `spring-webflux`. Es la opción recomendada por Spring para aplicaciones modernas, especialmente en arquitecturas reactivas.
-
-**Características**:
-- Soporte para operaciones síncronas, asíncronas y streaming.
-- Basado en Reactor (Mono/Flux) para programación reactiva.
-- Compatible con clientes HTTP como Reactor Netty, Jetty, o Apache HttpClient.
-- Configuración avanzada para timeouts, interceptores y codificación/decodificación.
-- Soporte para WebSockets y multipart/form-data.
-
-**Casos de uso**:
-- Aplicaciones reactivas o basadas en Spring WebFlux.
-- Escenarios con alta concurrencia donde el bloqueo de hilos es costoso.
-- Comunicación con APIs que requieren streaming o respuestas asíncronas.
-- Proyectos que buscan aprovechar las ventajas de la programación reactiva.
-
-**Dependencias en `pom.xml`**:
-```xml
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-webflux</artifactId>
-    <version>3.3.3</version>
-</dependency>
-```
-
-**Ejemplo**:
-```java
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
-
-public class WebClientExample {
-    public static void main(String[] args) {
-        WebClient webClient = WebClient.create("https://api.example.com");
-
-        // GET request (asíncrono)
-        Mono<String> result = webClient.get()
-                .uri("/users")
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .bodyToMono(String.class);
-
-        result.subscribe(System.out::println);
-
-        // POST request (síncrono)
-        String newUser = "{\"name\": \"Jane Doe\", \"email\": \"jane@example.com\"}";
-        String response = webClient.post()
-                .uri("/users")
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(newUser)
-                .retrieve()
-                .bodyToMono(String.class)
-                .block(); // Bloquea para obtener el resultado síncrono
-
-        System.out.println(response);
-    }
-}
-```
-
-**Ventajas**:
-- No bloqueante, ideal para aplicaciones de alta concurrencia.
-- Soporte completo para programación reactiva.
-- Muy flexible para escenarios complejos como streaming o WebSockets.
-
-**Limitaciones**:
-- Requiere familiaridad con programación reactiva (Reactor).
-- Puede ser excesivo para aplicaciones simples que no necesitan reactividad.
-
----
-
-### 3. TestRestTemplate
-**Descripción**: `TestRestTemplate` es una variante de `RestTemplate` diseñada específicamente para pruebas de integración en aplicaciones Spring Boot. No extiende `RestTemplate`, pero ofrece funcionalidades similares con características adicionales para pruebas, como autenticación simplificada y manejo de cookies.
-
-**Características**:
-- Simplifica la autenticación básica y el manejo de cookies/redirects.
-- Compatible con las mismas operaciones HTTP que `RestTemplate` (GET, POST, etc.).
-- Permite personalizar el cliente HTTP subyacente (Apache HttpClient, etc.).
-- Integración nativa con Spring Boot Test.
-
-**Casos de uso**:
-- Pruebas de integración para APIs REST en aplicaciones Spring Boot.
-- Escenarios donde se necesita autenticación básica o manejo de cookies en pruebas.
-- Testing de aplicaciones legacy que aún usan `RestTemplate`.
-
-**Dependencias en `pom.xml`**:
-```xml
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-test</artifactId>
-    <version>3.3.3</version>
-    <scope>test</scope>
-</dependency>
-```
-
-**Ejemplo**:
-```java
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class TestRestTemplateExample {
-
-    private final TestRestTemplate testRestTemplate;
-
-    public TestRestTemplateExample(TestRestTemplate testRestTemplate) {
-        this.testRestTemplate = testRestTemplate;
-    }
-
-    @Test
-    void testGetUsers() {
-        // GET request con autenticación básica
-        TestRestTemplate authTemplate = new TestRestTemplate("user", "password");
-        ResponseEntity<String> response = authTemplate.getForEntity("/api/users", String.class);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        System.out.println(response.getBody());
-    }
-}
-```
-
-**Ventajas**:
-- Simplifica las pruebas de integración con configuraciones específicas para testing.
-- Soporte para autenticación y cookies sin configuración adicional.
-- Ideal para probar APIs REST en entornos controlados.
-
-**Limitaciones**:
-- Solo para pruebas, no para uso en producción.
-- Menos flexible que `RestClient` o `WebClient` para configuraciones avanzadas.
-
----
-
-### 4. Java HttpClient (JDK)
 **Descripción**: Introducido en **Java 11** y mejorado en **Java 21**, `HttpClient` es una API nativa del JDK para realizar solicitudes HTTP síncronas y asíncronas. No depende de Spring, lo que la hace ideal para aplicaciones que buscan minimizar dependencias externas.
+
 
 **Características**:
 - Soporte para HTTP/1.1 y HTTP/2.
@@ -218,15 +11,18 @@ public class TestRestTemplateExample {
 - Configuración de timeouts, autenticación y encabezados personalizados.
 - Ligero, ya que está incluido en el JDK.
 
+
 **Casos de uso**:
 - Aplicaciones que no usan Spring o que buscan evitar dependencias externas.
 - Escenarios simples donde no se necesita la integración con Spring.
 - Proyectos que aprovechan características modernas de Java 21 (como `CompletableFuture`).
 
 **Dependencias en `pom.xml`**:
+
 Ninguna, ya que está incluido en el JDK 21.
 
 **Ejemplo**:
+
 ```java
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -270,10 +66,19 @@ public class HttpClientExample {
 - Menos integración con Spring (sin soporte para convertidores de mensajes automáticos).
 - Requiere más código para manejar JSON u otros formatos complejos.
 
----
+<br>
 
-### 5. Feign Client
+<br>
+<br>
+
+<br>
+
+# Feign Client
+
+
 **Descripción**: **OpenFeign** es una biblioteca declarativa para crear clientes HTTP, popular en aplicaciones Spring Cloud. Permite definir interfaces Java que se mapean directamente a endpoints REST, reduciendo el código repetitivo.
+
+
 
 **Características**:
 - API declarativa basada en anotaciones (`@FeignClient`).
@@ -363,6 +168,10 @@ public class FeignClientExample {
 
 Para un proyecto típico en **Spring Boot 3.x** con **Java 21**, recomendaría usar **RestClient** para la mayoría de los casos síncronos y **WebClient** si planeas adoptar una arquitectura reactiva. Usa **TestRestTemplate** exclusivamente para pruebas de integración. Si trabajas en un entorno de microservicios con Spring Cloud, considera **Feign Client**.
 
+
+<br>
+
+
 **Referencias**:
 - Spring Framework Documentation:,[](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html)[](https://docs.spring.io/spring-framework/reference/integration/rest-clients.html)
 - Baeldung:,[](https://www.baeldung.com/spring-webclient-resttemplate)[](https://www.baeldung.com/spring-boot-testresttemplate)
@@ -372,27 +181,13 @@ Para un proyecto típico en **Spring Boot 3.x** con **Java 21**, recomendaría u
 
 
 
+<br>
+<br>
+<br>
 
+<br>
 
-
-
-
-
-
-
-.  
-.  
-.  
-.  
-.  
-.  
-.  
-.  
-.  
-
-
-
-
+<br>
 
 
 
@@ -402,14 +197,12 @@ Para un proyecto típico en **Spring Boot 3.x** con **Java 21**, recomendaría u
 
 ---
 
-.
+<br>
+
 
 # Solo RestClient y Feign Client.  
-.  
-.  
-  
-.  
-.  
+
+<br>
 
 
 
@@ -597,6 +390,7 @@ public interface TokenFeignClient {
 ```
 
 **Uso del Cliente**:
+
 ```java
 package com.example.demo;
 
@@ -642,15 +436,18 @@ public class DemoApplication implements CommandLineRunner {
 - Más dependencias que `RestClient` (Spring Cloud Feign).
 - Menos flexible para configuraciones avanzadas de bajo nivel.
 
----
+<br>
+
 
 ### Notas Adicionales
+
 - **Credenciales**: En ambos ejemplos, el cuerpo de la solicitud (`credentials`) es un ejemplo. Ajusta el JSON según los requisitos de la API (por ejemplo, `clientId`, `clientSecret`, o cualquier otro parámetro).
 - **Manejo de Errores**: Puedes agregar manejo de errores más específico en ambos casos usando `.onError()` en `RestClient` o un `ErrorDecoder` en Feign.
 - **Seguridad**: Si la API requiere encabezados adicionales (como `Authorization` o `X-API-Key`), agrégalos en la configuración de `RestClient` o en la interfaz de Feign.
 - **Timeout**: Configura timeouts en `RestClient` (usando `RestClientBuilder`) o en Feign (usando `Feign.Builder`) si la API tiene tiempos de respuesta variables.
 - **Formato de Respuesta**: Asumo que la API retorna el token como una cadena plana. Si retorna un JSON (por ejemplo, `{"token": "eyJhbGci..."}`), ajusta el tipo de retorno a una clase DTO como:
-  ```java
+
+   ```java
   public class TokenResponse {
       private String token;
       // Getters y setters
@@ -658,6 +455,7 @@ public class DemoApplication implements CommandLineRunner {
   ```
 
 **Ejemplo de Configuración de Timeout para RestClient**:
+
 ```java
 RestClient restClient = RestClient.builder()
         .baseUrl("https://corresponsalias.santander.com.ar")
@@ -669,6 +467,7 @@ RestClient restClient = RestClient.builder()
 ```
 
 **Ejemplo de Configuración de Timeout para Feign**:
+
 ```java
 @Bean
 public Feign.Builder feignBuilder() {
@@ -691,20 +490,18 @@ Si necesitas más detalles (por ejemplo, manejo de errores avanzado, autenticaci
 
 
 
-.  
-.  
-.  
+<br>
+<br>
+<br>
 
----
-
-
-.  
+<br>  
 
 
 
 
 # Test Unitarios y de Integración para Feign Client
 
+<br>
 
 A continuación, extiendo la solución de **Feign Client** proporcionada previamente para incluir **manejo de errores avanzado** y ejemplos de **pruebas unitarias** y **pruebas de integración**. El manejo de errores se implementará utilizando un `ErrorDecoder` personalizado para procesar respuestas HTTP de error (por ejemplo, 4xx, 5xx) y excepciones de red. Las pruebas unitarias usarán **Mockito** para simular el comportamiento del cliente Feign, mientras que las pruebas de integración usarán **TestRestTemplate** y un servidor WireMock para simular la API de Santander.
 
@@ -761,7 +558,10 @@ Para manejar errores avanzados, implementaremos un `ErrorDecoder` personalizado 
 </project>
 ```
 
-**Configuración de Resilience4j** (en `application.yml`, sin cambios):
+**Configuración de Resilience4j** 
+
+(en `application.yml`, sin cambios):
+
 ```yaml
 resilience4j.retry:
   instances:
@@ -774,6 +574,7 @@ resilience4j.retry:
 ```
 
 **ErrorDecoder Personalizado**:
+
 ```x-java-source
 package com.example.demo.config;
 
@@ -848,6 +649,7 @@ class RetryableException extends RuntimeException {
 ```
 
 **Configuración de Feign para Usar el ErrorDecoder**:
+
 ```x-java-source
 package com.example.demo.config;
 
@@ -866,6 +668,7 @@ public class FeignConfig {
 ```
 
 **Feign Client (sin cambios)**:
+
 ```x-java-source
 package com.example.demo.client;
 
@@ -885,6 +688,7 @@ public interface TokenFeignClient {
 ```
 
 **Explicación del Manejo de Errores**:
+
 - **CustomErrorDecoder**: Procesa los códigos de estado HTTP y el cuerpo de la respuesta para generar excepciones específicas:
   - **400**: `BadRequestException` para errores de solicitud mal formada.
   - **401/403**: `AuthenticationException` para problemas de autenticación.
@@ -894,12 +698,15 @@ public interface TokenFeignClient {
 - **Logging**: Se registran los detalles del error (URL, código de estado, mensaje) usando SLF4J.
 - **Reintentos**: Los errores 5xx y excepciones de red (`ConnectException`) se reintentan hasta 3 veces, como se configuró en `application.yml`.
 
----
+<br>
+<br>
+
 
 ### 2. Pruebas Unitarias
 Las pruebas unitarias simulan el comportamiento del cliente Feign usando **Mockito** para evitar llamadas reales a la API.
 
 **Ejemplo de Prueba Unitaria**:
+
 ```x-java-source
 package com.example.demo.client;
 
@@ -975,6 +782,7 @@ Las pruebas de integración usan **WireMock** para simular la API de Santander y
 Asegúrate de que WireMock esté corriendo (puedes iniciarlo como un servidor standalone o embebido en la prueba).
 
 **Ejemplo de Prueba de Integración**:
+
 ```x-java-source
 package com.example.demo.client;
 
@@ -1078,6 +886,7 @@ public interface TokenFeignClient {
 ```
 
 Y en `application-test.yml`:
+
 ```yaml
 token.api.url: http://localhost:8089
 ```
@@ -1094,4 +903,3 @@ token.api.url: http://localhost:8089
 - Si la API requiere encabezados adicionales (por ejemplo, `Authorization`), agrégalos en la interfaz Feign con `@RequestHeader`.
 - Para pruebas de integración más realistas, considera usar un entorno de staging o un token de prueba proporcionado por Santander.
 
-Si necesitas más detalles (por ejemplo, pruebas con OAuth, configuraciones específicas de la API, o integración con otros servicios), por favor proporciónalos.
