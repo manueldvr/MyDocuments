@@ -43,7 +43,7 @@ docs, tutorials, books
 		- [Clientes RESTful](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/ARQ/Clientes%20RESTful.md)
 		- [RESTful Feign comparacion test](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/Solicitudes%20HTTP_1.md)
 	- **Arquitecturas Distribuidas & Patrones de Integracion**.
-		- [Arquitecturas distribuidas y patrones de integracion]()
+		- [Arquitecturas distribuidas y patrones de integracion](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/ARQ/Arquitecturas%20distribuidas%20y%20patrones%20de%20integracion.md)
 - **Persistencia**
     - [JPA]()
     - [JPA 1:N](https://github.com/manueldvr/MyDocuments/blob/master/Persistance/JPA.md)
