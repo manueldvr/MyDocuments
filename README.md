@@ -20,7 +20,7 @@ docs, tutorials, books
 	- **Exceptions**
    		- [basics](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/exceptions.md)  
   - **Colections**
-  		- [Colecciones](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Collections.md)  
+  	- [Colecciones](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Collections.md)  
   - **Lambda & Streams**
   	- [Lambda & Streams](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/LambdaStream.md)    
   	- [Lambda with Java8]()
