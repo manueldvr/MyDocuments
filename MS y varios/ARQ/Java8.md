@@ -203,6 +203,7 @@ La API Stream permite procesar colecciones de datos de forma declarativa, con op
 
 
 #### Ejemplo 1: Filtrar y Contar Elementos
+
 ```java
 import java.util.Arrays;
 import java.util.List;
@@ -224,6 +225,7 @@ public class StreamCountExample {
 **Explicación**: El stream filtra las palabras con `filter(p -> p.length() > 4)` y usa `count()` para obtener el número de elementos que cumplen la condición.
 
 #### Ejemplo 2: Transformar y Recolectar
+
 ```java
 import java.util.Arrays;
 import java.util.List;
@@ -294,6 +296,7 @@ public class PredicateExample {
 **Explicación**: La interfaz funcional `Predicate` define el método `test`. La lambda `n -> n % 2 != 0` implementa este método para filtrar números impares.
 
 #### Ejemplo 2: Crear una Interfaz Funcional Personalizada
+
 ```java
 @FunctionalInterface
 interface Operacion {
@@ -315,6 +318,7 @@ public class CustomFunctionalInterface {
 **Explicación**: La interfaz `Operacion` está anotada con `@FunctionalInterface` y define un solo método abstracto `aplicar`. Las lambdas `(a, b) -> a + b` y `(a, b) -> a - b` implementan esta interfaz.
 
 #### Ejemplo 3: Usar `Consumer` para Imprimir Personalizado
+
 ```java
 import java.util.Arrays;
 import java.util.List;
@@ -537,6 +541,7 @@ public class StaticMethodUtilityExample {
     }
 }
 ```
+
 **Explicación**:
 - El método estático `sumar` en `Calculadora` proporciona una utilidad que no requiere una instancia.
 - Se invoca con `Calculadora.sumar(10, 5)` sin necesidad de crear un objeto.

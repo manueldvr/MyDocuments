@@ -23,6 +23,7 @@ docs, tutorials, books
   		- [Colecciones](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Collections.md)  
   - **Lambda & Streams**
   		- [Lambda & Streams](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/LambdaStream.md)    
+  		- [Lambda with Java8]()
   - **Concurrencia**
 		- [@Async, Future, Completable Future, y Executor Service API](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/concurrencia_1.md)
 		- [@Async vs @Transactional](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Async%20vs%20Transactional.md)
@@ -37,8 +38,11 @@ docs, tutorials, books
   - [Projections](https://github.com/manueldvr/MyDocuments/blob/master/spring/Proyecciones.md)
   - [¿Cómo optimizar Spring Boot con Java 21 para Escalado Extremo que debe resolver 1 million de servicios RESTfull por segundo?](https://github.com/manueldvr/MyDocuments/blob/master/spring/Asynchronous%20%26%20Non-Blocking.md) 
 	- **RESTful**.  
+		- [intro]()
 		- [Clientes RESTful](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/ARQ/Clientes%20RESTful.md)
-		- [RESTful Feign test](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/Solicitudes%20HTTP_1.md)
+		- [RESTful Feign comparacion test](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/Solicitudes%20HTTP_1.md)
+	- **Arquitecturas Distribuidas & Patrones de Integracion**.
+		- [Arquitecturas distribuidas y patrones de integracion]()
 - **Persistencia**
     - [JPA]()
     - [JPA 1:N](https://github.com/manueldvr/MyDocuments/blob/master/Persistance/JPA.md)
