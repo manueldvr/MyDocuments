@@ -44,7 +44,7 @@ docs, tutorials, books
 		- [RESTful Feign comparacion test](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/Solicitudes%20HTTP_1.md)
 	- **Arquitecturas Distribuidas & Patrones de Integracion**.
 		- [Arquitecturas distribuidas y patrones de integracion](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/ARQ/Arquitecturas%20distribuidas%20y%20patrones%20de%20integracion.md)
-		- [Arquitecturas distribuidas y patrones de integracion II]()
+		- [Arquitecturas distribuidas y patrones de integracion II](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/ARQ/Arquitecturas%20Distribuidas%20%26%20Patrones%20de%20Integración%20-%20II.md)
 - **Persistencia**
     - [JPA]()
     - [JPA 1:N](https://github.com/manueldvr/MyDocuments/blob/master/Persistance/JPA.md)
