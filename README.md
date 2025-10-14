@@ -22,13 +22,13 @@ docs, tutorials, books
   - **Colections**
   		- [Colecciones](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Collections.md)  
   - **Lambda & Streams**
-  		- [Lambda & Streams](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/LambdaStream.md)    
-  		- [Lambda with Java8]()
+  	- [Lambda & Streams](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/LambdaStream.md)    
+  	- [Lambda with Java8]()
   - **Concurrencia**  
-		- [@Async, Future, Completable Future, y Executor Service API](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/concurrencia_1.md).
-		- [@Async vs @Transactional](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Async%20vs%20Transactional.md).
-		- [Ultimate Java Concurrency & Multithreading Roadmap](https://github.com/manueldvr/MyDocuments/blob/master/concurrency/Java%20Concurrency%20Multithreading%20Roadmap.md).  
-		- [Tutorial: Usando @Async en Spring Boot](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/concurrencia_Async.md).    
+	- [@Async, Future, Completable Future, y Executor Service API](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/concurrencia_1.md).
+	- [@Async vs @Transactional](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Async%20vs%20Transactional.md).
+	- [Ultimate Java Concurrency & Multithreading Roadmap](https://github.com/manueldvr/MyDocuments/blob/master/concurrency/Java%20Concurrency%20Multithreading%20Roadmap.md).  
+	- [Tutorial: Usando @Async en Spring Boot](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/concurrencia_Async.md).    
 - **Clean Code**
     - [basics](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Clean%20Code.md)
     - [OCP](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/OCP.md)
