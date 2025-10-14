@@ -2,8 +2,14 @@
 
 
 <br>
+En el contexto de sistemas **RESTful** con **Spring Boot**.
 
-¡Hola! Claro, te doy una introducción clara y concisa sobre **arquitecturas distribuidas** y **patrones de integración** en el contexto de sistemas **RESTful** con **Spring Boot**.
+<br>
+
+- **Arquitecturas Distribuidas**
+- **Patrones de Integración** 
+
+<br>
 
 ### **1. Arquitecturas distribuidas**
 Las arquitecturas distribuidas son sistemas donde los componentes están distribuidos en diferentes nodos físicos o lógicos, comunicándose a través de una red (como Internet o una red interna). Estos sistemas están diseñados para ser escalables, tolerantes a fallos y flexibles, pero también presentan desafíos como latencia, consistencia de datos y complejidad en la comunicación.
