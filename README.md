@@ -38,7 +38,8 @@ docs, tutorials, books
   - [Projections](https://github.com/manueldvr/MyDocuments/blob/master/spring/Proyecciones.md)
   - [¿Cómo optimizar Spring Boot con Java 21 para Escalado Extremo que debe resolver 1 million de servicios RESTfull por segundo?](https://github.com/manueldvr/MyDocuments/blob/master/spring/Asynchronous%20%26%20Non-Blocking.md) 
 	- **RESTful**.  
-		- [intro]()
+		- [intro](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/RESTful.md)
+		- [RESTful specification](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/Buenas%20prácticase%20APIs%20Rest.md)
 		- [Clientes RESTful](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/ARQ/Clientes%20RESTful.md)
 		- [RESTful Feign comparacion test](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/Solicitudes%20HTTP_1.md)
 	- **Arquitecturas Distribuidas & Patrones de Integracion**.
