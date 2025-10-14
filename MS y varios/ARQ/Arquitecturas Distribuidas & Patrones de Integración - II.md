@@ -19,6 +19,7 @@ La **Arquitectura Basada en Eventos** es un patrón de integración en sistemas 
 - **Resiliencia**: Si un servicio falla, los eventos pueden almacenarse en colas (como RabbitMQ) para procesarse más tarde.
 
 #### Implementación en Spring Boot con RabbitMQ:
+
 Spring Boot, junto con **Spring Cloud Stream**, simplifica la integración con sistemas de mensajería como **RabbitMQ**. RabbitMQ actúa como un broker de mensajes que gestiona colas y asegura que los eventos se entreguen a los consumidores adecuados. Spring Cloud Stream abstrae los detalles de bajo nivel, permitiendo a los desarrolladores centrarse en la lógica de publicación y consumo de eventos.
 
 
@@ -31,6 +32,7 @@ Spring Boot, junto con **Spring Cloud Stream**, simplifica la integración con s
 
 
 # Ejemplo práctico: Sistema con dos servicios usando RabbitMQ
+
 <br>
 
 Imagina un sistema con dos microservicios:
@@ -64,6 +66,7 @@ Crearemos 2 aplicaciones Spring Boot:
 <br>
 ---
 <br>
+
 ### Proyecto 1: User Service
 
 #### Dependencias (pom.xml)
