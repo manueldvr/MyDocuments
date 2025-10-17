@@ -1,19 +1,25 @@
 # colecciones
 
 
-En Java 21, el framework de colecciones (`java.util`) es una parte fundamental de la API estándar que proporciona estructuras de datos para almacenar, manipular y procesar conjuntos de elementos. A continuación, te ofrezco un resumen de las principales colecciones en Java, sus características y un ejemplo práctico para ilustrar su uso.
+En Java 21, el framework de colecciones (`java.util`) es una parte fundamental de la API estándar que proporciona estructuras de datos para almacenar, manipular y procesar conjuntos de elementos. 
+
+
 
 ### Resumen de las colecciones en Java 21
+
 El framework de colecciones se basa en la interfaz `Collection` y se extiende a otras interfaces más específicas como `List`, `Set`, `Queue`, y `Map` (aunque `Map` no extiende `Collection`). Estas interfaces son implementadas por clases concretas que ofrecen diferentes comportamientos según el caso de uso.
 
-#### 1. **Interfaces principales**
+
+#### 1. Interfaces principales
+
 - **`Collection`**: Interfaz raíz para la mayoría de las colecciones (excepto `Map`). Define operaciones básicas como añadir, eliminar y consultar elementos.
 - **`List`**: Colección ordenada que permite duplicados. Ejemplos: `ArrayList`, `LinkedList`.
 - **`Set`**: Colección sin duplicados. Ejemplos: `HashSet`, `LinkedHashSet`, `TreeSet`.
 - **`Queue`**: Diseñada para procesar elementos en un orden específico (FIFO, LIFO, etc.). Ejemplo: `LinkedList`, `PriorityQueue`.
 - **`Map`**: Almacena pares clave-valor, sin duplicados en las claves. Ejemplos: `HashMap`, `LinkedHashMap`, `TreeMap`.
 
-#### 2. **Clases principales**
+#### 2. Clases principales
+
 | Clase             | Interfaz       | Características                                                                 |
 |-------------------|----------------|---------------------------------------------------------------------------------|
 | `ArrayList`       | `List`         | Lista dinámica basada en un arreglo, rápida para accesos aleatorios.             |
@@ -25,6 +31,21 @@ El framework de colecciones se basa en la interfaz `Collection` y se extiende a 
 | `LinkedHashMap`   | `Map`          | Mapa que mantiene el orden de inserción.                                        |
 | `TreeMap`         | `Map`          | Mapa ordenado por claves, basado en un árbol binario balanceado.                 |
 | `PriorityQueue`   | `Queue`        | Cola que ordena elementos según prioridad (natural o personalizada).            |
+
+
+##### Comparación    
+
+| Característica     | `Map`                | `HashMap`                   | `Set`            | `HashSet`        |
+| ------------------ | -------------------- | --------------------------- | ---------------- | ---------------- |
+| Tipo               | Interfaz             | Clase                       | Interfaz         | Clase            |
+| Estructura         | Pares clave-valor    | Pares clave-valor           | Elementos únicos | Elementos únicos |
+| Permite duplicados | Claves: ❌ Valores: ✅ | Claves: ❌ Valores: ✅        | ❌                | ❌                |
+| Permite `null`     | Depende              | ✅ (1 clave, varios valores) | Depende          | ✅ (1 valor)      |
+| Orden garantizado  | ❌                    | ❌                           | ❌                | ❌                |
+| Basado en          | —                    | Hash table                  | —                | Hash table       |
+| Thread-safe        | ❌                    | ❌                           | ❌                | ❌                |
+
+
 
 #### 3. **Novedades en Java 21**
 Java 21 introduce mejoras como **secuencias** (sequenced collections), que proporcionan una API unificada para colecciones con un orden definido (como `List`, `LinkedHashSet`, `LinkedHashMap`). Estas colecciones implementan la interfaz `SequencedCollection` (o `SequencedMap` para mapas), que ofrece métodos como:
