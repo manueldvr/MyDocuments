@@ -46,16 +46,24 @@ El framework de colecciones se basa en la interfaz `Collection` y se extiende a 
 | Thread-safe        | ❌                    | ❌                           | ❌                | ❌                |
 
 
+<br>
+
 
 #### 3. **Novedades en Java 21**
+
 Java 21 introduce mejoras como **secuencias** (sequenced collections), que proporcionan una API unificada para colecciones con un orden definido (como `List`, `LinkedHashSet`, `LinkedHashMap`). Estas colecciones implementan la interfaz `SequencedCollection` (o `SequencedMap` para mapas), que ofrece métodos como:
+
 - `getFirst()` / `getLast()`: Obtener el primer/último elemento.
 - `addFirst()` / `addLast()`: Añadir elementos al inicio/fin (en colecciones que lo soporten).
 - `reversed()`: Obtener una vista inversa de la colección.
 
 Por ejemplo, en Java 21, puedes usar `List.of(...).reversed()` para obtener una lista en orden inverso de manera sencilla.
 
+<br>
+
+
 #### 4. **Cuándo usar cada colección**
+
 - **ArrayList**: Ideal para listas de acceso aleatorio rápido, pero menos eficiente para inserciones/eliminaciones frecuentes.
 - **LinkedList**: Útil para listas con muchas inserciones/eliminaciones en los extremos.
 - **HashSet**: Para conjuntos donde no importa el orden y necesitas unicidad.
