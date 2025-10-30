@@ -212,7 +212,9 @@ public class BeanConfiguration {
 }
 ```
 
----
+
+<br>
+
 
 ### Beneficios de la arquitectura hexagonal en Spring Boot
 
@@ -228,7 +230,10 @@ public class BeanConfiguration {
 4. **Separación de preocupaciones**:
    - Las responsabilidades están claramente definidas, lo que hace que el código sea más comprensible.
 
----
+
+<br>
+
+<br>
 
 ### Pruebas
 
@@ -241,9 +246,15 @@ public class BeanConfiguration {
 3. **Pruebas de aceptación**:
    - Valida el sistema completo con herramientas como Postman o frameworks como Cucumber.
 
----
+
+<br>
+
+<br>
+
+
 
 #Refs
+
 
 Finally, some useful links about Hexagonal Architecture:
 
