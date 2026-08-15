@@ -2,7 +2,9 @@
 
 
 
-En Java, **interfaces** y **clases abstractas** son dos conceptos fundamentales de la programación orientada a objetos que permiten definir estructuras y comportamientos comunes, pero tienen diferencias clave en su propósito, uso y características. A continuación, se detalla una explicación clara y concisa de ambos, sus diferencias, y cuándo usar cada uno, basada en la documentación y prácticas comunes de Java.
+En Java, **interfaces** y **clases abstractas** son dos conceptos fundamentales de la programación orientada a objetos que permiten definir estructuras y comportamientos comunes, pero tienen diferencias clave en su propósito, uso y características.
+
+A continuación, se detalla una explicación clara y concisa de ambos, sus diferencias, y cuándo usar cada uno, basada en la documentación y prácticas comunes de Java.
 
 ### **Clases Abstractas**
 - **Definición**: Una clase abstracta es una clase que no puede ser instanciada directamente (no se pueden crear objetos de ella) y se utiliza como una plantilla para otras clases. Se declara con la palabra clave `abstract`.

@@ -17,8 +17,7 @@ docs, tutorials, books
     - [Patrones: Singleton, Factory, Observer]()
     - [Template](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Template.md)
     - [Strategy](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Strategy.md)
-	- **Exceptions**
-   		- [basics](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/exceptions.md)  
+	- [Exceptions basic](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/exceptions.md)
   - **Colections**
   	- [Colecciones](https://github.com/manueldvr/MyDocuments/blob/master/OO-CleanCode/Collections.md)  
   - **Lambda & Streams**
@@ -36,7 +35,7 @@ docs, tutorials, books
   - [error-Injection](https://github.com/manueldvr/MyDocuments/blob/master/spring/error-injection.md)
   - [Overview](https://github.com/manueldvr/MyDocuments/blob/master/spring/Overview.md)
   - [Projections](https://github.com/manueldvr/MyDocuments/blob/master/spring/Proyecciones.md)
-  - [¿Cómo optimizar Spring Boot con Java 21 para Escalado Extremo que debe resolver 1 million de servicios RESTfull por segundo?](https://github.com/manueldvr/MyDocuments/blob/master/spring/Asynchronous%20%26%20Non-Blocking.md) 
+  - [¿Cómo optimizar Spring Boot con Java 21 para Escalado Extremo que debe resolver 1 million de servicios RESTfull por segundo?](https://github.com/manueldvr/MyDocuments/blob/master/spring/Asynchronous%20%26%20Non-Blocking.md)
 	- **RESTful**.  
 		- [intro](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/RESTful.md)
 		- [RESTful specification](https://github.com/manueldvr/MyDocuments/blob/master/MS%20y%20varios/Buenas%20prácticase%20APIs%20Rest.md)

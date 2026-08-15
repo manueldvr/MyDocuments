@@ -1,18 +1,24 @@
 # Overview: Spring, Spring Framework, and Spring Boot
 
+<br>
+
 they refer to distinct (yet interconnected) parts of the Spring ecosystem.
 
 Here's a breakdown:
 
-- **Spring**: This is the broad, overarching name for the entire Spring project ecosystem developed by Pivotal (now part of VMware). It encompasses a family of tools, frameworks, and libraries for building enterprise Java applications.
+- **Spring**: This is the broad, overarching name for the entire Spring project ecosystem developed by Pivotal (now part of VMware). It encompasses a family of tools, frameworks, and libraries for building enterprise Java applications.  
 Think of it as the "brand" that includes everything from core frameworks to specialized modules like Spring Security, Spring Data, and Spring Cloud.
 
-- **Spring Framework**: The foundational, core open-source framework (often just called "Spring Core").
+- **Spring Framework**: The foundational, core open-source framework (often just called "Spring Core").  
 It's the engine that powers dependency injection (IoC container), aspect-oriented programming (AOP), transaction management, MVC web support, and more.
 It's highly configurable but requires manual setup for most features, making it ideal for complex, customized enterprise apps.
 
 - **Spring Boot**: A "batteries-included" extension built *on top of* Spring Framework.
-It simplifies development by providing auto-configuration, embedded servers (e.g., Tomcat), starter dependencies (POMs for quick setup), and production-ready features like metrics and health checks.
+It simplifies development by providing auto-configuration:
+  - embedded servers (e.g., Tomcat),
+  - starter dependencies (POMs for quick setup),
+  - production-ready features like metrics and health checks.
+
 It's designed for rapid prototyping and microservices, reducing boilerplate code.
 
 <br>

@@ -46,8 +46,8 @@ A reactive approach in Spring Boot, using Spring WebFlux and Project Reactor, pr
 
 ### ■ Top 10 Spring Data JPA Mistakes and How to Avoid Them (With Examples)
 https://rameshfadatare.medium.com/top-10-spring-data-jpa-mistakes-and-how-to-avoid-them-with-examples-1359083797b1
-	
-	
+
+
 
 ### ■ Spring Data JPA: Handling Large Data Sets with Streaming  
 https://medium.com/spring-boot/spring-data-jpa-handling-large-data-sets-with-streaming-adf1082b6cdc  
