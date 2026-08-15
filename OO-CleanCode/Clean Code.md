@@ -1,5 +1,5 @@
 
-# Clean Code
+# Clean Code - SOLID
 
 
 ### Contexto en Clean Code:
